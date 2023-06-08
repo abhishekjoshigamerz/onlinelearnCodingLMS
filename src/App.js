@@ -1,4 +1,4 @@
-import React ,  { useState } from 'react';
+import React ,  { useState,useRef } from 'react';
 import './App.css'; // Make sure to create this CSS file
 import AceEditor from 'react-ace';
 import "ace-builds/src-noconflict/mode-java";
@@ -10,7 +10,7 @@ const menus = ['Menu 1', 'Menu 2', 'Menu 3', 'Menu 4','Menu 5','Menu 6','Menu 7'
 
 //displays output and code results if we pass all the cases for code
 function NewComponent({goBack}) {
-  return <div>
+  return <div className='output'>
    <p> Nunc vitae ullamcorper dui. Mauris id lacinia lorem, in feugiat lacus. Nullam 
 at metus et lacus pellentesque volutpat non quis sem. Aliquam blandit vitae 
 justo ut eleifend. Aliquam erat volutpat. Cras sed dapibus elit, eu ornare 
@@ -20,12 +20,39 @@ turpis. Maecenas ultrices aliquam nisl, nec lobortis mi tincidunt quis.
   </div>
 }
 
-function App() {
-  const [submitted , setSubmitted] = useState(false);
+function TestCaseComponent({goBack}) {
+  return <div className='output'>
+    <p> Nunc vitae ullamcorper dui. Mauris id lacinia lorem, in feugiat lacus. Nullam</p>
+    <button type='button' className='button' onClick={goBack}>Back</button>
+  </div>
+}
 
+function App() {
+  //checks for submisisons
+  const [submitted , setSubmitted] = useState(false);
+  const [testcaseSubmission, setTestcaseSubmission] = useState(false);
+  //keeps on changing values 
+  const editorRef = useRef(null);
+  
+  //handles test cases
+  const handleTestCase = () => {
+    setTestcaseSubmission(!testcaseSubmission);
+    if(editorRef.current){
+      let code = btoa(editorRef.current.editor.getValue());
+      console.log(code);
+    }
+  };
+
+
+
+  //hanle code submission
   const handleClick = () => {
-     
     setSubmitted(!submitted);
+   
+    if(editorRef.current){
+      let code = btoa(editorRef.current.editor.getValue());
+      console.log(code);
+    }
   };
 
   return (
@@ -47,31 +74,11 @@ function App() {
             ? <p>This is some text in the center of the page.</p> 
             : <NewComponent goBack={handleClick} />
           }  
-         
-          {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere libero sed 
-magna vulputate, a posuere ante dictum. Aliquam erat volutpat. Morbi lorem ante, 
-interdum id porttitor at, placerat non diam. Sed quis est ullamcorper, congue 
-turpis ac, tincidunt lorem. Quisque posuere urna sed justo finibus dapibus. 
-<br /><br />
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac 
-turpis egestas. Nunc eget porttitor purus. Quisque laoreet diam et congue 
-porttitor. Fusce ullamcorper, sem eu lacinia volutpat, velit nunc vulputate 
-arcu, ac lobortis elit turpis sed velit. 
-<br /><br />
-Proin sodales auctor mauris a bibendum. Suspendisse pulvinar fringilla ultrices. 
-In hac habitasse platea dictumst. Sed elementum velit velit, at posuere metus 
-suscipit at. Quisque malesuada lacinia lacus, id venenatis ante ullamcorper et. 
-<br /><br />
-Praesent tempus finibus ipsum, sit amet commodo arcu semper at. Donec auctor 
-gravida neque, sit amet ultrices massa tempus id. Sed sed neque in est 
-consequat maximus. Proin congue erat in lectus euismod, sed sollicitudin diam 
-lobortis. 
-<br /><br />
-Nunc vitae ullamcorper dui. Mauris id lacinia lorem, in feugiat lacus. Nullam 
-at metus et lacus pellentesque volutpat non quis sem. Aliquam blandit vitae 
-justo ut eleifend. Aliquam erat volutpat. Cras sed dapibus elit, eu ornare 
-turpis. Maecenas ultrices aliquam nisl, nec lobortis mi tincidunt quis.
-</p> */}
+        {!testcaseSubmission
+            ? <p>This is some text in the center of the page.</p>
+            : <TestCaseComponent goBack={handleTestCase} />
+        }
+
         </div>
         <div className="editor">
         <AceEditor
@@ -83,7 +90,9 @@ turpis. Maecenas ultrices aliquam nisl, nec lobortis mi tincidunt quis.
             showPrintMargin={true}
             showGutter={true}
             highlightActiveLine={true}
-            value={`public class Solution {\n public static void main(String[] args) {\n   // Prints "Hello, World" to the terminal window.\n   System.out.println("Hello, World");\n }\n}`}
+            value={'import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String name = scanner.nextLine();\n        System.out.println("hello, " + name);\n    }\n}\n'
+          }
+           
             setOptions={{
               enableBasicAutocompletion: true,
               enableLiveAutocompletion: true,
@@ -92,11 +101,12 @@ turpis. Maecenas ultrices aliquam nisl, nec lobortis mi tincidunt quis.
               tabSize: 2,
             }}
             style={{ width: '100%', height: '100%' }}
+            ref={editorRef}
           />
         </div>
       </div>
       <div className='footer'>
-        <button type='submit'>Test Cases</button>
+        <button type='submit' onClick={handleTestCase}>Test Cases</button>
         <button type='submit' onClick={handleClick}>Submit Code</button>
       </div>          
     </div>
