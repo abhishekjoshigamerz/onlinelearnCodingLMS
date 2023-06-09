@@ -6,52 +6,88 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-language_tools";
 
 
+import { submitCode,getSubmissionStatus } from './services/judge0';
+
 const menus = ['Menu 1', 'Menu 2', 'Menu 3', 'Menu 4','Menu 5','Menu 6','Menu 7','Menu 8','Menu 9','Menu 10']; // List of your menus
 
 //displays output and code results if we pass all the cases for code
-function NewComponent({goBack}) {
+function NewComponent({goBack,data}) {
+  if(data.status.id==6){
+    let output = atob(data.compile_output);
+    return <div className='output'>
+    <h4>Code Output : </h4>
+   <p className='errorMessage'> {output} </p><br />
+   </div>
+  }else{
+    let output = atob(data.stdout);
+    const lines = output.split('\n');
   return <div className='output'>
-   <p> Nunc vitae ullamcorper dui. Mauris id lacinia lorem, in feugiat lacus. Nullam 
-at metus et lacus pellentesque volutpat non quis sem. Aliquam blandit vitae 
-justo ut eleifend. Aliquam erat volutpat. Cras sed dapibus elit, eu ornare 
-turpis. Maecenas ultrices aliquam nisl, nec lobortis mi tincidunt quis.
-</p><br />
+    <h4>Code Output : </h4>
+    {lines.map((line, index) => (
+          <p key={index}>{line}</p>
+    ))}<br />
+    <br />
+    <hr />
+    <pre>{output}</pre>
+    <p>Number of Test cases passed : 20/20</p>
 <button type='button' className='button' onClick={goBack}>Back</button>
   </div>
+  }
+  
 }
 
-function TestCaseComponent({goBack}) {
-  return <div className='output'>
-    <p> Nunc vitae ullamcorper dui. Mauris id lacinia lorem, in feugiat lacus. Nullam</p>
-    <button type='button' className='button' onClick={goBack}>Back</button>
-  </div>
-}
+async function waitForResult(token){
+  const result =  await getSubmissionStatus(token);
+  if(result.status.id<=2){
+    console.log(result);
+    // setTimeout(() => waitForResult(result.token), 2000);
+    return new Promise(resolve => 
+      setTimeout(() => resolve(waitForResult(result.token)), 2000)
+    );
+  }else{
+    console.log(result);
+    console.log(result.stdout);
+   
+    return result;
+  } 
+} 
 
 function App() {
   //checks for submisisons
-  const [submitted , setSubmitted] = useState(false);
-  const [testcaseSubmission, setTestcaseSubmission] = useState(false);
+  
+  const [output, setOutput] = useState(null);
+  
+  const [isLoading, setIsLoading] = useState(false);
+
   //keeps on changing values 
   const editorRef = useRef(null);
-  
-  //handles test cases
-  const handleTestCase = () => {
-    setTestcaseSubmission(!testcaseSubmission);
-    if(editorRef.current){
-      let code = btoa(editorRef.current.editor.getValue());
-      console.log(code);
-    }
-  };
-
-
-
+ 
   //hanle code submission
-  const handleClick = () => {
-    setSubmitted(!submitted);
+  const handleClick = async() => {
    
+    if(output !== null){
+      setOutput(null);
+    
+      return;
+    }
     if(editorRef.current){
-      let code = btoa(editorRef.current.editor.getValue());
-      console.log(code);
+      setIsLoading(true);
+      let code = editorRef.current.editor.getValue();
+      const submission = await submitCode(btoa(code), 62, 'World');
+      
+     
+      
+      
+      if(submission){
+        console.log(submission.token);
+        const finalresult = await waitForResult(submission.token);
+        console.log(finalresult);
+        console.log('Line 54');
+        if(finalresult){
+          setOutput(finalresult);
+          setIsLoading(false);          
+        }
+      }
     }
   };
 
@@ -70,14 +106,24 @@ function App() {
           </ul>
         </div>
         <div className="content">
-        {!submitted 
-            ? <p>This is some text in the center of the page.</p> 
-            : <NewComponent goBack={handleClick} />
-          }  
-        {!testcaseSubmission
-            ? <p>This is some text in the center of the page.</p>
-            : <TestCaseComponent goBack={handleTestCase} />
-        }
+       
+
+{output === null ? (
+      isLoading ? (
+        <div className='loader-container'>
+        <div className="loader">
+        </div>
+        <p>Testing all user cases</p>
+        </div>
+      ) : (
+        <div className='content-text'>
+        <p>This is some text in the center of the page.</p>
+        </div>
+      )
+    ) : (
+      <NewComponent goBack={handleClick} data={output} />
+    )}
+
 
         </div>
         <div className="editor">
@@ -85,12 +131,12 @@ function App() {
             mode="java"
             theme="monokai"
             name="ACE_EDITOR_DIV"
-            editorProps={{ $blockScrolling: true }}
+            editorProps={{ $blockScrolling: Infinity }}
             fontSize={14}
             showPrintMargin={true}
             showGutter={true}
             highlightActiveLine={true}
-            value={'import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String name = scanner.nextLine();\n        System.out.println("hello, " + name);\n    }\n}\n'
+            defaultValue={'//Write your java code here' 
           }
            
             setOptions={{
@@ -106,7 +152,6 @@ function App() {
         </div>
       </div>
       <div className='footer'>
-        <button type='submit' onClick={handleTestCase}>Test Cases</button>
         <button type='submit' onClick={handleClick}>Submit Code</button>
       </div>          
     </div>
