@@ -1,0 +1,32 @@
+.course-content {
+    display: flex;
+    flex-direction: row; /* Ensures the children are oriented in a row */
+    flex-wrap: wrap; /* Allows the children to wrap if necessary */
+    justify-content: space-between;
+    align-items: flex-start; /* Aligns children to start of the container */
+    height: calc(100vh - 60px); /* Decreases container height by header's height */
+    overflow: hidden; /* Hides any overflow */
+   
+  }
+  
+    
+    .sidebar {
+      flex: 3;
+      border-right: 1px solid #ccc;
+      padding-right: 20px;
+    }
+    
+    .content {
+      flex: 1.5;
+      padding: 0 20px;
+      background: #ccc;
+      height: 100vh;
+      overflow-y: scroll;
+    }
+    
+    .ace-editor {
+      flex: 1.5;
+      border-left: 1px solid #ccc;
+      padding-left: 20px;
+    }
+    
