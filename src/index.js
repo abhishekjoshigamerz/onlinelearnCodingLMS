@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import CourseContent from './components/CourseContent/CourseContent';
 import TopicContent from './components/CourseContent/TopicContent/TopicContent';
+import Login from './components/Login/Login';
+import Register from './components/Register/Register';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
   {
     path:"/courses/:slug/:id",
     element:<TopicContent />,
+  },
+  {
+    path:"/login",
+    element:<Login />,
+  },
+  {
+    path:"/register",
+    element:<Register />,
   }
 ]);
 

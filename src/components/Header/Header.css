@@ -25,6 +25,12 @@
   padding: 10px 20px; /* Wider buttons */
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.siteTitle{
+  text-decoration: none;
+  color:white;
 }
 
 .header-button:hover {
