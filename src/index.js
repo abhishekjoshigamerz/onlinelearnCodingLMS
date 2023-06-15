@@ -6,11 +6,15 @@ import CourseContent from './components/CourseContent/CourseContent';
 import TopicContent from './components/CourseContent/TopicContent/TopicContent';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
+import About from './components/About/About';
+import Contact from './components/Contact/Contact';
+import Dashboard from './components/Dashboard/Dashboard';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-
+import store from './store';
+import { Provider } from 'react-redux';
 
 const router = createBrowserRouter([
   {
@@ -21,10 +25,7 @@ const router = createBrowserRouter([
     path: "/courses/:slug",
     element: <CourseContent />,
   },
-  {
-    path:"/courses/:slug/:id",
-    element:<TopicContent />,
-  },
+  
   {
     path:"/login",
     element:<Login />,
@@ -32,14 +33,31 @@ const router = createBrowserRouter([
   {
     path:"/register",
     element:<Register />,
+  },
+  {
+    path:"about",
+    element: <About />,
+  },
+  {
+    path:"contact",
+    element:<Contact />
+  },
+  {
+    path:"dashboard",
+    element:<Dashboard />
+  },
+  {
+    path:"/courses/:slug/topic/:id",
+    element:<TopicContent />
   }
+  
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+    <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
+    </React.StrictMode>
 );
 
 

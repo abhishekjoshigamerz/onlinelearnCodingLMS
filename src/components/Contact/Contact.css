@@ -1,0 +1,46 @@
+.contact-us-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height:80vh;
+}
+
+.contact-us-container h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.contact-us-container form {
+    display: grid;
+    grid-gap: 10px;
+}
+
+.contact-us-container label {
+    font-size: 1.2em;
+    color: #333;
+}
+
+.contact-us-container input,
+.contact-us-container textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contact-us-container button[type='submit'] {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

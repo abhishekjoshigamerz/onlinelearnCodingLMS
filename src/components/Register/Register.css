@@ -44,3 +44,9 @@
     margin-bottom: 5px;
     display: block;
 }
+.alert-message{
+    color: red;
+    font-size: 12px;
+    margin-bottom: 10px;
+    
+}

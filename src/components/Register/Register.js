@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import './Register.css';
 function Register() {
@@ -9,14 +10,32 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleSubmit = (e) => {
+  const [notificationMessage,setNotificationMessage] = useState("");
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+   
     // Add a basic check to see if passwords match
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
+    }else{
+
+      const registerUser = await  axios.post('http://localhost:5000/api/users/register',{
+        fullname: username,
+        email: email,
+        password: password
+
+      });
+
+      if(registerUser.status === 200){
+        //write me code to show a success message in div
+        setNotificationMessage("User registered successfully, Now go to login page to login");
+        navigate('/login');
+      }else{
+        setNotificationMessage("User registration failed, please try again");  
+      }
+
     }
 
     // Here you would typically handle registration, e.g., send a request to your server
@@ -29,9 +48,10 @@ function Register() {
     <>
     <Header />
     <div className='register-container'>
+      <p className='alert-message'>{notificationMessage}</p>
     <form className='register-form' onSubmit={handleSubmit}>
       <div>
-        <label>Username:</label>
+        <label>Full Name:</label>
         <input
           type="text"
           value={username}

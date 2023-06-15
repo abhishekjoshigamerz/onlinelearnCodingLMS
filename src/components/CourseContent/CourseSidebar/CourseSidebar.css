@@ -74,4 +74,6 @@
     padding-right: 10px; /* Adjust the padding as needed */
     margin-right: -10px; /* Adjust the margin as needed */
   }
-  
+  .course-title{
+    margin-left:10px;
+  }

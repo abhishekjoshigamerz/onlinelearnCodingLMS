@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import CarouselComponent from './components/Carousel/Carousel';
 import CoursesComponent from './components/Courses/Courses';
 import Footer from './components/Footer/Footer';
+import { AuthProvider } from "./context/AuthContext";
 const App = () => {
   return (
     <div>

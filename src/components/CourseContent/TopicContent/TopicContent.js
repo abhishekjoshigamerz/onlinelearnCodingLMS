@@ -4,8 +4,9 @@ import './TopicContent.css';
 import Header from '../../Header/Header';
 import CourseFooter from '../CourseFooter/CourseFooter';
 import CourseSidebar from '../CourseSidebar/CourseSidebar';
-import { databases,Query } from '../../../services/appwrite';
 import AceEditorComponent from '../../AceEditorComponent/AceEditorComponent';
+
+import axios from 'axios';
 
 const TopicContent = () => {
     const { slug,id } = useParams();
@@ -14,10 +15,10 @@ const TopicContent = () => {
     useEffect(() => {
         const fetchContent = async () => {
             console.log("Inside the userEffect");
-            const response = await databases.getDocument('64833e8413a93babd4b6', '648470492489f7fdfa72', id);
-            const getTopic = response.documents;
+            const response = await axios.get(`http://localhost:5000/api/gettopic/${id}`);
+            const getTopic = response.data.topic;
             setTopicContent(getTopic);
-            console.log('Line 20 is ' + getTopic);
+            console.log( getTopic);
            
         }
 
@@ -33,10 +34,10 @@ const TopicContent = () => {
             <div className='content'>
              {topicContent && (
                  <>
-                 <h3>{topicContent[0].topicName}</h3>
-                    <pre>
-                        {topicContent[0].topicContent}
-                    </pre>
+                <h2 className="content-title">{topicContent.name}</h2>
+                <pre className='pre'>
+                  {topicContent.description}
+                </pre>
                  </>
               )}
             </div>

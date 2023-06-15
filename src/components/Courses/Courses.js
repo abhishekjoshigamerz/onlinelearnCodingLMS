@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import './Courses.css';
 import { databases } from '../../services/appwrite';
 import { NavLink } from 'react-router-dom';
-async function getCourses(){
-  const response = await databases.listDocuments('64833e8413a93babd4b6', '648445e5a12e6ed3ebe8');
-  return response.documents; 
-}
+import axios from 'axios';
 
 const Courses = () => {
 
   const [courses, setCourses] = useState(null);
 
   useEffect(() => {
-    getCourses().then(data => setCourses(data));
+    const getCourses = async () => {
+      const response = await axios.get('http://localhost:5000/api/courses');
+      console.log(response.data.courses);
+      setCourses(response.data.courses);
+    }
+    getCourses();
   }, []);
 
   return (
@@ -21,10 +23,10 @@ const Courses = () => {
       <div className="courses-list">
         {courses && courses.map((course, index) => (
           <div key={index} className="courses-item">
-            <img src={course.courseImage} alt={course.courseTitle} className="courses-item-image" />
-            <h3 className="courses-item-title">{course.courseTitle}</h3>
-            <p className="courses-item-desc">{course.courseDescription}</p>
-            <NavLink to={'courses/'+course.courseslug} className="courses-item-button">Enroll Now</NavLink>
+            <img src={course.courseImage} alt={course.name} className="courses-item-image" />
+            <h3 className="courses-item-title">{course.name}</h3>
+            <p className="courses-item-desc">{course.description}</p>
+            <NavLink to={'courses/'+course._id} className="courses-item-button">Enroll Now</NavLink>
           </div>
         ))}
       </div>

@@ -4,52 +4,46 @@ import './CourseContent.css';
 import Header from '../Header/Header';
 import CourseFooter from './CourseFooter/CourseFooter';
 import CourseSidebar from './CourseSidebar/CourseSidebar';
-import { databases } from '../../services/appwrite';
 import AceEditorComponent from '../AceEditorComponent/AceEditorComponent';
+import axios from 'axios'; 
 
 const CourseContent = () => {
     const { slug } = useParams();
+    console.log(slug);
     const [course, setCourse] = useState(null);
-    console.log('Line 13'+slug);
+
     useEffect(() => {
         const fetchContent = async () => {
-            
-                const response = await databases.listDocuments('64833e8413a93babd4b6', '648445e5a12e6ed3ebe8');
-                const courses = response.documents;
-                const course = courses.find((course) => course.courseslug === slug);
-                setCourse(course);
-            
-
-           
+          try {
+            const response = await axios.get(`http://localhost:5000/api/course/${slug}`);
+            console.log(response.data.course);
+            setCourse(response.data.course);
+          } catch (error) {
+            console.error("Error fetching course data: ", error);
+          }
         }
-
         fetchContent();
-
     }, [slug]);
+
   return (
     <>
-    <Header />
-    <div className="course-content">
+      <Header />
+      <div className="course-content">
         <CourseSidebar />
-
-      {/* <div className="content">
-        <h3>{course.courseTitle}</h3>
-        <p> {course.courseDescription} </p>
-      </div> */}
-
-        {course && (
+        {course ? (
           <div className="content">
-            <h3>{course?.courseTitle}</h3>
-            <p>{course?.courseDescription}</p>
+            <h3>{course.name}</h3>
+            <p>{course.description}</p>
           </div>
+        ) : (
+          <div>Loading...</div>
         )}
-
-      <div className="ace-editor">
-        <AceEditorComponent />
+        <div className="ace-editor">
+          <AceEditorComponent />
+        </div>
       </div>
-    </div>
-    <CourseFooter />
-  </>
+      <CourseFooter />
+    </>
   );
 };
 
