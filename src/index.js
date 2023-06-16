@@ -13,9 +13,16 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import store from './store';
-import { Provider } from 'react-redux';
 
+import { AuthProvider } from 'react-auth-kit';
+
+
+<AuthProvider authType = {'cookie'}
+authName={'_auth'}
+cookieDomain={window.location.hostname}
+cookieSecure={window.location.protocol === "https:"}>
+
+</AuthProvider>
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,7 +30,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/courses/:slug",
-    element: <CourseContent />,
+    element: <CourseContent />, 
   },
   
   {

@@ -4,7 +4,7 @@ import 'ace-builds/src-noconflict/mode-java'; // Import the Java mode
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
 
-const AceEditorComponent = () => {
+const AceEditorComponent = ({code,setCode}) => {
   const editorRef = useRef(null);
 
   useEffect(() => {
@@ -15,10 +15,16 @@ const AceEditorComponent = () => {
       enableBasicAutocompletion: true,
       enableLiveAutocompletion: true,
     });
-
+   
     // Set the default value for the editor
-    editor.setValue('public class HelloWorld {\n  public static void main(String[] args) {\n    System.out.println("Hello, World!");\n  }\n}');
+    const defaultValue = 'public class HelloWorld {\n  public static void main(String[] args) {\n    System.out.println("Hello, World!");\n  }\n}';
+    editor.setValue(code || defaultValue);
+    const onChange = () => {
+      const newCode = editor.getValue();
+      setCode(newCode);
+    };
 
+    editor.getSession().on('change', onChange);
     return () => {
       editor.destroy();
     };

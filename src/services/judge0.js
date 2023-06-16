@@ -12,7 +12,7 @@ export const submitCode = async (source_code, language_id, stdin) => {
         source_code: source_code,
         language_id: language_id,
         stdin: input,
-        expected_output: 'MSAKMCAxIAoxIDAgMSAKMCAxIDAgMSAKMSAwIDEgMCAxIAowIDEgMCAxIDAgMSAK'
+        expected_output: 'MzA='
       }
     );
 

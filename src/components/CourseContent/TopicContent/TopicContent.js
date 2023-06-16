@@ -11,15 +11,14 @@ import axios from 'axios';
 const TopicContent = () => {
     const { slug,id } = useParams();
     const [topicContent, setTopicContent] = useState(null);
-    console.log('Line 13 is '+id);
+    const [code, setCode] = useState("");
+    const [output,setOutput] = useState(null);
     useEffect(() => {
         const fetchContent = async () => {
-            console.log("Inside the userEffect");
+          
             const response = await axios.get(`http://localhost:5000/api/gettopic/${id}`);
             const getTopic = response.data.topic;
-            setTopicContent(getTopic);
-            console.log( getTopic);
-           
+            setTopicContent(getTopic);   
         }
 
         fetchContent();
@@ -30,8 +29,25 @@ const TopicContent = () => {
         <Header />
         <div className="course-content">
             <CourseSidebar />
-    
             <div className='content'>
+  {topicContent && (
+    <>
+      <h2 className="content-title">{topicContent.name}</h2>
+      {output ? (
+        <div>
+          <h3>Output:</h3>
+          <pre>{output}</pre>
+        </div>
+      ) : (
+        <pre className='pre'>
+          {topicContent.description}
+        </pre>
+      )}
+    </>
+  )}
+</div>
+
+            {/* <div className='content'>
              {topicContent && (
                  <>
                 <h2 className="content-title">{topicContent.name}</h2>
@@ -40,13 +56,13 @@ const TopicContent = () => {
                 </pre>
                  </>
               )}
-            </div>
+            </div> */}
     
           <div className="ace-editor">
-            <AceEditorComponent />
+            <AceEditorComponent code={code} setCode={setCode}/>
           </div>
         </div>
-        <CourseFooter />
+        <CourseFooter code={code}  output={output} setOutput={setOutput}/>
       </>
     );
     
