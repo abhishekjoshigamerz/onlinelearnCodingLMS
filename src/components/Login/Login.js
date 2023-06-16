@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
+import { useSignIn } from 'react-auth-kit'
 
 
 //styles and page components
@@ -18,6 +18,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [token, setToken] = useState('');
   const navigate = useNavigate();
+  const signIn = useSignIn();
  
 
 
@@ -37,7 +38,16 @@ function Login() {
 
     if(response.data.accessToken){
       console.log("response.data.accessToken:", response.data.accessToken);
-    
+      const accessToken = response.data.accessToken;
+      signIn({
+        token: accessToken,
+        expiresIn: 60 * 30,
+        tokenType: 'Bearer',
+        authState: { email: email },
+        refreshToken: response.data.refreshToken,
+        refreshTokenExpireIn: 60 * 60 * 24 * 2,
+
+      });      
       navigate('/dashboard'); 
     }else{
       console.log("Failure to authenticate");

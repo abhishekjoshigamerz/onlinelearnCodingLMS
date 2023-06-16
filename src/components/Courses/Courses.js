@@ -26,7 +26,7 @@ const Courses = () => {
             <img src={course.courseImage} alt={course.name} className="courses-item-image" />
             <h3 className="courses-item-title">{course.name}</h3>
             <p className="courses-item-desc">{course.description}</p>
-            <NavLink to={'courses/'+course._id} className="courses-item-button">Enroll Now</NavLink>
+            <NavLink to={'/courses/'+course._id} className="courses-item-button">Enroll Now</NavLink>
           </div>
         ))}
       </div>
