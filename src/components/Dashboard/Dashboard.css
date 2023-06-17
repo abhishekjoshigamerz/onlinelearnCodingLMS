@@ -1,0 +1,19 @@
+.mainHeader{
+  background-color: #f5f5f5;
+  width: 100%;
+  
+  
+  text-align: center;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+}
+
+.email-verified-banner {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+   
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+  }

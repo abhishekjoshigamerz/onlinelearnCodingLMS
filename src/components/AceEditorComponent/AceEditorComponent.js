@@ -30,7 +30,7 @@ const AceEditorComponent = ({code,setCode}) => {
     };
   }, []);
 
-  return <div ref={editorRef} style={{ width: '100%', height: '100vh' }} />;
+  return <div ref={editorRef} style={{ width: '100%', height: '100%' ,  overflow: 'auto'  }} />;
 };
 
 export default AceEditorComponent;

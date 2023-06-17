@@ -38,9 +38,7 @@ const CourseContent = () => {
         ) : (
           <div>Loading...</div>
         )}
-        <div className="ace-editor">
-          <AceEditorComponent />
-        </div>
+        
       </div>
       <CourseFooter />
     </>

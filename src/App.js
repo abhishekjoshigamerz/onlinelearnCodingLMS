@@ -14,8 +14,9 @@ import About from './components/About/About';
 import Contact from './components/Contact/Contact';
 import Dashboard from './components/Dashboard/Dashboard';
 import Home from './components/Home/Home';
-import Setting from './components/Settings/Setting';
+import Settings from './components/Settings/Setting';
 import PracticeIDE from './components/PracticeIDE/PracticeIDE';
+import VerifyEmail from './components/VerifyEmail/VerifyEmail';
 import { RequireAuth } from "react-auth-kit";
 
 const App = () => {
@@ -41,11 +42,16 @@ const App = () => {
           <TopicContent />
         </RequireAuth>}></Route>
         <Route path='/settings' element={<RequireAuth loginPath='/login'>
-          <Setting />
+          <Settings />
         </RequireAuth>}></Route>
-        <Route path='/practice-ide' element={<RequireAuth loginPath='/login'>
+        <Route path="/practice-ide" element={<RequireAuth loginPath='/login'>
           <PracticeIDE />
         </RequireAuth>}></Route>
+
+        <Route path='/users/verify-email/:id' element={<VerifyEmail />}></Route>
+
+
+        <Route path="*" element={<h1>Not Found</h1>} />
 
     </Routes>
   );

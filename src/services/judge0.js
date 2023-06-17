@@ -32,3 +32,23 @@ export const getSubmissionStatus = async (token) => {
     return null;
   }
 }
+
+export const practiceSubmitCode = async (source_code, language_id, stdin) => {
+  let input = btoa(stdin);
+  console.log(language_id);
+  try {
+    const response = await axios.post(
+      `${JUDGE0_API}/submissions?base64_encoded=true&wait=false`, 
+      {
+        source_code: source_code,
+        language_id: language_id,
+        stdin: input,
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
