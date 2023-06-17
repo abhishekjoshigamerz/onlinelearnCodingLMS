@@ -15,7 +15,7 @@ const Header = () => {
       {isAuthenticated() ? (
   <div className="header-buttons">
     
-    <NavLink to="/about" className="header-button">About Us</NavLink>
+    <NavLink to="/practice-ide" className="header-button">Practice IDE</NavLink>
     <NavLink to="/settings" className="header-button">Settings</NavLink>
     <button  className="header-button" onClick={()=>signOut()}>Log out</button>
   </div>
