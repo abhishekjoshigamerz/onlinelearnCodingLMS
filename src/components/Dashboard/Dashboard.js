@@ -16,7 +16,7 @@ const Dashboard = () => {
     e.preventDefault();
 
     console.log('Button has been clicked!');
-    const request = await axios.post(`http://localhost:5000/api/users/send-verification-email/${userId}`); 
+    const request = await axios.get(`http://localhost:5000/api/users/send-verification-email/${userId}`); 
 
     if(request.status == 204){
       setEmailIsNotVerified('Email has been sent!');
