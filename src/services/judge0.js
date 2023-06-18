@@ -3,7 +3,7 @@ import axios from 'axios';
 const JUDGE0_API = 'http://139.144.5.252:2358'; // Use your custom Judge0 API if necessary
 
 
-export const submitCode = async (source_code, language_id, stdin) => {
+export const submitCode = async (source_code, language_id, stdin,exp_output) => {
   let input = btoa(stdin);
   try {
     const response = await axios.post(
@@ -12,7 +12,7 @@ export const submitCode = async (source_code, language_id, stdin) => {
         source_code: source_code,
         language_id: language_id,
         stdin: input,
-        expected_output: 'MzA='
+        expected_output: exp_output
       }
     );
 
