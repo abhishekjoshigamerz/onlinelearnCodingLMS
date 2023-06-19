@@ -25,6 +25,8 @@ const Courses = () => {
     if (request.status == 204) {
     //redirect to course page 
     navigate(`/courses/${id}`);
+    }else if(request.status == 200){
+      navigate(`/courses/${id}`);
     } else {
       console.log('Error in enrolling user in course!');
     }

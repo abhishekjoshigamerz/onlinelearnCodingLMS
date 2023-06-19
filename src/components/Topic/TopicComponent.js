@@ -6,15 +6,19 @@ import TopicContent from './TopicContent';
 import TopicEditor from './TopicEditor';
 import TopicFooter from './TopicFooter';
 import axios from 'axios';
-
-
+import {useAuthUser} from 'react-auth-kit';
 import './TopicComponent.css';
 const TopicComponent = () => {
     
     const {slug,id} = useParams();
     const courseId = slug;
-    const topicId = id; 
+    const topicId = id;
+    
+    const [completedTopics, setCompletedTopics] = useState([]);
 
+    
+    const userEmail = useAuthUser();
+    
     const [topic,setTopic] = useState({});
     const [title,setTitle] = useState('');
    
@@ -27,7 +31,7 @@ const TopicComponent = () => {
         const fetchContent = async () => {
             const response = await axios.get(`http://localhost:5000/api/course/${courseId}`);
             if(response){
-                console.log(response.data.course.topics);
+             
                 // setTitle(response.data.course.name);
                  setTopic(response.data.course.topics);
 
@@ -45,7 +49,7 @@ const TopicComponent = () => {
             const response = await axios.get(`http://localhost:5000/api/gettopic/${topicId}`);
 
             if(response){
-                console.log(response.data.topic);
+               
 
                 settopicContent(response.data.topic);
             }
@@ -57,16 +61,38 @@ const TopicComponent = () => {
     }, [topicId]);
     
 
+    //fetch users data
+    useEffect(() => {
+        const fetchContent = async () => {
+            const request = await axios.get(`http://localhost:5000/api/getcompletedtopics/${courseId}/${userEmail().email}`);
+            
+            if(request.status==200){
+                console.log(request.data.completedTopics); 
+                if(request.data.completedTopics.length>0){
+                    setCompletedTopics(request.data.completedTopics);
+                }else{
+                    setCompletedTopics([]);
+                }
+                
+            }            
+        }
+
+
+        fetchContent();
+    },[]);
+
     return (
         <>
             <Header />
             <div className='topic-container'>
-                <TopicSidebar courseId={courseId} topics={topic}/>  
+                <TopicSidebar courseId={courseId} topics={topic} completedTopics={completedTopics}/>  
                 <TopicContent topiccontent={topiccontent}/> 
                 <TopicEditor code={code} setCode={setCode}/>    
                  
             </div>
-            <TopicFooter code={code} />  
+            <TopicFooter code={code} topicId={topicId} courseId={courseId} topiccontent={topiccontent} userEmail={userEmail().email}  
+            completedTopics={completedTopics} setCompletedTopics={setCompletedTopics}
+            />  
         </>
     )
 

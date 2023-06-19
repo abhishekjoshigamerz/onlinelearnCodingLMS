@@ -52,3 +52,50 @@ export const practiceSubmitCode = async (source_code, language_id, stdin) => {
     return null;
   }
 }
+
+export const doBatchedSubmission = async (source_code, language_id, stdin,exp_output) => {
+
+  let batchedSubmissions = {
+    "submissions":[]
+  }
+
+  for(let i = 0 ; i< stdin.length;i++){
+    let submission = {"language_id": language_id,
+    "source_code": source_code,
+    "stdin": stdin[i],
+    "expected_output": exp_output[i]
+    }
+
+    batchedSubmissions.submissions.push(submission);
+
+  }
+
+
+  try{
+    const response = await axios.post( `${JUDGE0_API}/submissions/batch?base64_encoded=true`,batchedSubmissions);
+    
+    
+    return response.data;   
+  }catch(error){
+    console.log(error);
+    return null;
+  }
+}
+
+
+
+export const getBatchedSubmissionStatus = async (token) => {
+
+  try{
+  let result =  await axios.get(`${JUDGE0_API}/submissions/batch?tokens=${token}&base64_encoded=true&fields=token,stdout,stderr,status_id,language_id`);
+    if(result){
+      return result.data;
+    }
+  
+  }catch(error){
+    console.log(error);
+    return null;
+  }
+
+
+}
