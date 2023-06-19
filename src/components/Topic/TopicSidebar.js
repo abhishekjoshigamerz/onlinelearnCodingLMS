@@ -11,13 +11,13 @@ const TopicSidebar = ({courseId, topics,completedTopics}) => {
                 <ul className="sidebar-topics">
                     {topics && topics.length > 0 ? (
                         topics.map((topic) => (
-                            <NavLink 
+                            <li><NavLink 
                                 to={'/courses/' + courseId + '/topic/' + topic._id}
                                 className="linkTopics"
                                 key={topic._id}
                             >
                                 <li id={topic._id}>{topic.name} {completedTopics.includes(topic._id) && <span style={{ color: 'green' }}>&#10004;</span>}</li> 
-                            </NavLink>  
+                            </NavLink></li>  
                         ))
                     ) : (
                         <div>Loading topics...</div>
