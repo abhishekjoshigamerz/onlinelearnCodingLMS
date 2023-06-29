@@ -14,9 +14,14 @@ const TopicComponent = () => {
     const courseId = slug;
     const topicId = id;
     
-    const [completedTopics, setCompletedTopics] = useState([]);
 
-    
+    //completed topics 
+    const [completedTopics, setCompletedTopics] = useState([]);
+    const [isCompiling, setIsCompiling] = useState(false);
+    const [isOutputReady, setIsOutputReady] = useState(false);
+    const [outputData, setOutputData] = useState(null);
+
+
     const userEmail = useAuthUser();
     
     const [topic,setTopic] = useState({});
@@ -86,12 +91,28 @@ const TopicComponent = () => {
             <Header />
             <div className='topic-container'>
                 <TopicSidebar courseId={courseId} topics={topic} completedTopics={completedTopics}/>  
-                <TopicContent topiccontent={topiccontent}/> 
+                <TopicContent 
+                    topiccontent={topiccontent} 
+                    isCompiling={isCompiling}
+                    isOutputReady={isOutputReady} 
+                    outputData={outputData}
+                    setIsOutputReady={setIsOutputReady} 
+                /> 
                 <TopicEditor code={code} setCode={setCode}/>    
                  
             </div>
-            <TopicFooter code={code} topicId={topicId} courseId={courseId} topiccontent={topiccontent} userEmail={userEmail().email}  
-            completedTopics={completedTopics} setCompletedTopics={setCompletedTopics}
+            <TopicFooter 
+                code={code}
+                topicId={topicId}
+                 courseId={courseId}
+                 topiccontent={topiccontent}
+                 userEmail={userEmail().email}
+
+                completedTopics={completedTopics}
+                 setCompletedTopics={setCompletedTopics}
+                setIsCompiling={setIsCompiling}
+                setIsOutputReady={setIsOutputReady}
+                setOutputData={setOutputData} 
             />  
         </>
     )

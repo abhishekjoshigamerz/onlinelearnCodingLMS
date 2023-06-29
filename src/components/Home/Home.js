@@ -1,30 +1,50 @@
+import React from 'react'
 
-import React from 'react';
-import { Carousel } from 'react-responsive-carousel';
-import { Route, Routes } from "react-router-dom";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import Header from '../Header/Header';
-import CarouselComponent from '../Carousel/Carousel';
-import CoursesComponent from '../Courses/Courses';
-import Footer from '../Footer/Footer';
-import CourseContent from '../CourseContent/CourseContent';
-import TopicContent from '../CourseContent/TopicContent/TopicContent';
-import Login from '../Login/Login';
-import Register from '../Register/Register';
-import About from '../About/About';
+import AboutUs from '../About/AboutUs';
+import  Course  from '../Course/Course';
 import Contact from '../Contact/Contact';
-import Dashboard from '../Dashboard/Dashboard';
-
-
-const Home = () => {
+import Footer from '../Footer/Footer';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Home.css';
+export const Home = () => {
+ 
+  
   return (
-    <div>
-      <Header />
-      <CarouselComponent />
-      <CoursesComponent />
-      <Footer />
-    </div>
-  );
+      <div>
+        <Header />
+        <section className="bg-home bg-gradient" id="home">
+        <div className="home-center">
+            <div className="home-desc-center">
+                <div className="container-fluid">
+                    <div className="row align-items-center">
+                        <div className="col-lg-6 col-sm-6">
+                            <div className="home-title">
+                                <h5 className="mb-3 text-white-50">Discover CodeMaster Today</h5>
+                                <h2 className="mb-4 text-white">Turn Your Coding Journey Into an Adventure with CodeMaster</h2>
+                                <p className="text-white-50 home-desc font-16 mb-5">CodeMaster is an all-inclusive premium learning platform that includes an integrated IDE, built using the latest web technologies including HTML5, CSS3, and JavaScript,  Dive in to learn programming in a uniquely interactive and engaging environment. </p>
+                                <div className="watch-video mt-5">
+                                    <a href="#" className="btn btn-custom me-4">Get Started <i className="mdi mdi-chevron-right ms-1"></i></a>
+                                    <a href="http://vimeo.com/99025203" className="video-play-icon text-white"><i className="mdi mdi-play play-icon-circle me-2"></i> <span>Watch The Video</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-5 offset-lg-1 col-sm-6">
+                            <div className="home-img mo-mt-20">
+                                <img src="/assets/landingPage/landingpageheader.png" alt="" className="img-fluid mx-auto d-block"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        <AboutUs />
+        <Course />
+        <Contact />
+        <Footer />
+      </div>
+  )
 }
 
 export default Home;

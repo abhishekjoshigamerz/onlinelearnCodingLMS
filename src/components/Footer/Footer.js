@@ -1,16 +1,13 @@
+// Footer.js
 import React from 'react';
 import './Footer.css';
-import { NavLink } from 'react-router-dom';
+
 const Footer = () => {
-  return (
-    <footer className="footer">
-      <h2 className="footer-title">Site Title</h2>
-      <div className="footer-links">
-        <NavLink to="/about"  className="footer-link">About Us</NavLink>
-        <NavLink to="/contact" className="footer-link">Contact Us</NavLink>
-      </div>
-    </footer>
-  );
+    return (
+        <footer className="footer-div bg-dark text-light d-flex justify-content-center align-items-center">
+            <p>© {new Date().getFullYear()} Code Master</p>
+        </footer>
+    );
 }
 
 export default Footer;

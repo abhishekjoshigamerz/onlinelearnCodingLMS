@@ -1,0 +1,12 @@
+#card-element-container {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 5px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+}
+
+.StripeElement {
+    flex-grow: 1;
+}

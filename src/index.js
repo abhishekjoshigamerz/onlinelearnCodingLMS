@@ -1,35 +1,36 @@
+
+
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import ReactDOM from 'react-dom';
 import App from './App';
+import Dashboard from './Components/Dashboard/Dashboard';
+import Topic from './Components/Topic/Topic';
+import Login from './Components/Login/Login';
+
+import {store} from './app/store';
+import {Provider} from 'react-redux';
 import {
-  BrowserRouter,
   createBrowserRouter,
-  RouterProvider,
+  Routes,Route, BrowserRouter
 } from "react-router-dom";
 
-import { AuthProvider } from 'react-auth-kit';
-import refreshApi from "./refreshApi";
+
+const condition = true; // Condition for importing CSS file
 
 
+
+import('./index.css');
+    
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
-
-      <AuthProvider authType = {'cookie'}
-      authName={'_auth'}
-      cookieDomain={window.location.hostname}
-      cookieSecure={false}
-      refresh={refreshApi}
-      >
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </AuthProvider>
-
-
-    {/* <RouterProvider router={router} /> */}
-    </React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/*" element={<App />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>
 );
-
 

@@ -1,76 +1,73 @@
-import {React,useState,useEffect} from 'react';
-import {useAuthUser} from 'react-auth-kit';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import Courses from '../Courses/Courses';
+import React from 'react';
+import './Dashboard.css';
+import DashboardHeader from './DashboardHeader';
+import { useSelector } from 'react-redux';
+import Sidebar from './Sidebar';
+import UserCourses from '../UserCourses/UserCourses';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 
-import './Dashboard.css';
+
 const Dashboard = () => {
-  const auth = useAuthUser();
-  const [emailIsNotVerified,setEmailIsNotVerified] = useState(null);
-  const [userId,setUserId] = useState(null);
-  const user = useAuthUser();
 
-  const handleEmailVerify = async (e) => {
-    e.preventDefault();
-
-    console.log('Button has been clicked!');
-    const request = await axios.get(`http://localhost:5000/api/users/send-verification-email/${userId}`); 
-
-    if(request.status == 204){
-      setEmailIsNotVerified('Email has been sent!');
-      
-    }else{
-      
-    }  
-
-  }
+  const user = useSelector(state => state.auth.user);
+  const userID = useSelector(state => state.auth.id);
   
-  useEffect(() => {
+  console.log('User id is '+userID);
+ 
+  const isEmailVerified = useSelector(state => state.auth.emailVerified);
+  console.log(`Line 20 is ${isEmailVerified}`);
+  const [emailIsNotVerified, setEmailIsNotVerified] = React.useState(null);
+  const handleClick = async(e) => {
 
-    const fetchUserDetail = async () => {
-      let email = user().email;
-
-      let response = await axios.get(`http://localhost:5000/api/users/get-data/${email}`);
-      if(response.status == 200){
-        setUserId(response.data._id);
-        
-        if(!response.data.emailVerified){
-          setEmailIsNotVerified(true);
-          
-        }
-      }else{
-        console.log('Error in fetching user data');
-      }
-
+    e.preventDefault();
+    alert('Email sent successfully!');  
+    const request = await axios.get(`http://localhost:5000/api/users/send-verification-email/${userID}`); 
+     if(request.status == 204){
+      setEmailIsNotVerified('Email has been sent!'); 
     }
+  }
+    return (
+        <>
+  <DashboardHeader /> 
 
-    fetchUserDetail();
+<div class="container-fluid">
+  <div class="row">
+   <Sidebar /> 
 
-  },[]);
-  return (
-    <>
-     {emailIsNotVerified && 
-     <div className='mainHeader'>
-        <div className="email-verified-banner">
-          Your need to verify your email! &nbsp;
-          <button className='btn btn-warning' onClick={handleEmailVerify}> Resend mail</button><br />
-          <p>{emailIsNotVerified}</p>
-        </div>
-      </div>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5">
+      
+      {isEmailVerified ? null : 
+         <Alert variant="warning">
+      <Alert.Heading>Hey, You have not verified your email!</Alert.Heading>
+      <p>
+      {
+        emailIsNotVerified ?  
+        <p>{emailIsNotVerified}</p>
+      : 
+      <p>Please verify your email address to continue learning. You may like to check your spam folder as well. If you have not received the email, please click on the link below to resend the verification email.</p>  
       }
-    <Header />
-   
-    <div className='courses'>
-      <h1>Dashboard</h1>
-      <h2>Enrolled Courses : </h2>
-      No course enrolled till now !
-    </div>
-    <Courses />
-    <Footer />
-    </>
-  );
-};
+       
+      </p>
+      <hr />
+      <p className="mb-0">
+        <a href='#' onClick={handleClick}>Click here to resend verification email !</a>
+      </p>
+    </Alert>
+      }
+
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <p class="h4">Enrolled Courses</p>
+
+      </div>
+      <UserCourses />
+    </main>
+  </div>
+</div>
+
+        </>
+    );
+}
 
 export default Dashboard;

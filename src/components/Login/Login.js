@@ -1,89 +1,72 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
-import { useSignIn } from 'react-auth-kit'
+import  { react,useState,useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 
-//styles and page components
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import { setCredentials } from '../../features/auth/authSlice';
+import { useLoginMutation } from '../../features/auth/authApiSlice';
 import './Login.css';
 
-//redux state management actions
-
-
-function Login() {
-  const [email, setemail] = useState("");
+const Login = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState('');
   const navigate = useNavigate();
-  const signIn = useSignIn();
- 
+  const dispatch = useDispatch();
+  const [login,isLoading] = useLoginMutation();
+  
+  
+  const handleLogin = async(event) => {
+    event.preventDefault();
+    console.log(`Email: ${email}, Password: ${password}`);
 
-
-  const handleSubmit = async (e) => {
-    
-    e.preventDefault();
-
-    // Here you would typically handle login, e.g., send a request to your server
-
-
-    console.log("email:", email);
-    console.log("Password:", password);
-    const response = await axios.post('http://localhost:5000/api/users/login',{
-      email: email,
-      password: password
-    });
-
-    if(response.data.accessToken){
-      console.log("response.data.accessToken:", response.data.accessToken);
-      const accessToken = response.data.accessToken;
-      signIn({
-        token: accessToken,
-        expiresIn: 60 * 30,
-        tokenType: 'Bearer',
-        authState: { email: email },
-        refreshToken: response.data.refreshToken,
-        refreshTokenExpireIn: 60 * 60 * 24 * 2,
-
-      });      
-      navigate('/dashboard'); 
-    }else{
-      console.log("Failure to authenticate");
+    try {
+        const userData = await login({email,password}).unwrap();
+        console.log(userData);
+        dispatch(setCredentials({...userData,email} ));
+        navigate('/dashboard'); 
+    } catch (error) {
+      
     }
+
   };
 
   return (
-    <>
-    <Header />
-    <div className='login-container'>
-    <form className='login-form' onSubmit={handleSubmit}>
-      <div>
-        <label>Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={e => setemail(e.target.value)}
-        />
+    <div className="login-container d-flex justify-content-center align-items-center">
+      <div className="card shadow-lg">
+        <div className="card-body">
+          <h2 className="card-title text-center">Login</h2>
+          <form onSubmit={handleLogin} className="form-signin">
+            <div className="form-group">
+              <label htmlFor="inputEmail" className="sr-only">Email address</label>
+              <input 
+                type="email" 
+                id="inputEmail" 
+                className="form-control"
+                placeholder="Email address"
+                required autoFocus
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="inputPassword" className="sr-only">Password</label>
+              <input 
+                type="password" 
+                id="inputPassword"
+                className="form-control"
+                placeholder="Password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <NavLink to="/forgot-password" className="forgot-password-link">Forgot Password?</NavLink><br />
+            <button className="btn btn-lg btn-primary btn-block" onClick={handleLogin} type="submit">Sign in</button>
+          </form>
+        </div>
       </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
-      </div>
-      <div>
-        <button type="submit">Login</button>
-      </div>
-     
-    </form>
     </div>
-    <Footer />
-    </>
   );
-}
+};
 
 export default Login;

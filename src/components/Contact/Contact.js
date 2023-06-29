@@ -1,57 +1,111 @@
-import React, { useState } from 'react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import './Contact.css';
-const Contact = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [message, setMessage] = useState('');
+import React from 'react';
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Handle form submission logic here
-        console.log('Form submitted:', name, email, message);
-        // You can perform additional actions like sending the form data to a server or displaying a success message
-    };
+export const Contact = () => {
 
-    return (
-        <>
-        <Header />
-        <div className="contact-us-container">
-            <h1>Contact Us</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="name">Name:</label>
-                <input
-                    type="text"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                />
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Insert your form validation logic here
+    console.log('Form Submitted');
+  }
 
-                <label htmlFor="email">Email:</label>
-                <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
+  return (
+    <section className="section" id="contact">
+            <div className="container-fluid">
+                <div className="row justify-content-center">
+                    <div className="col-lg-6">
+                        <div className="title text-center mb-5">
+                            <h6 className="text-primary small-title">Contact</h6>
+                            <h4>Have any Questions ?</h4>
+                            <p className="text-muted">At solmen va esser far uniform grammatica.</p>
+                        </div>
+                    </div>
+                </div>
 
-                <label htmlFor="message">Message:</label>
-                <textarea
-                    id="message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    required
-                ></textarea>
+                <div className="row">
+                    <div className="col-lg-4">
+                        <div className="get-in-touch">
+                            <h5>Get in touch</h5>
+                            <p className="text-muted mb-5">At solmen va esser necessi far</p>
 
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-        <Footer />
-        </>
-    );
-};
+                            <div className="mb-3">
+                                <div className="get-touch-icon float-start me-3">
+                                   <h2><i className="pe-7s-mail text-primary"></i></h2>
+                                </div>
+                                <div className="overflow-hidden">
+                                    <h5 className="font-16 mb-0">E-mail</h5>
+                                    <p className="text-muted">example@abc.com</p>
+                                </div>
+                            </div>
+                            <div className="mb-3">
+                                <div className="get-touch-icon float-start me-3">
+                                    <h2><i className="pe-7s-phone text-primary"></i></h2>
+                                </div>
+                                <div className="overflow-hidden">
+                                    <h5 className="font-16 mb-0">Phone</h5>
+                                    <p className="text-muted">012-345-6789</p>
+                                </div>
+                            </div>
+                            <div className="mb-2">
+                                <div className="get-touch-icon float-start me-3">
+                                   <h2> <i className="pe-7s-map-marker text-primary"></i></h2>
+                                </div>
+                                <div className="overflow-hidden">
+                                    <h5 className="font-16 mb-0">Address</h5>
+                                    <p className="text-muted">20 Rollins Road Cotesfield, NE 68829</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-8">
+                        <div className="custom-form bg-white">
+                            <span id="error-msg"></span>
+                                <form method="post" name="myForm" onSubmit={handleSubmit}>
+                                <div className="row">
+                                    <div className="col-lg-6">
+                                        <div className="mb-3">
+                                            <label htmlFor="name" className="form-label">Name</label>
+                                            <input name="name" id="name" type="text" className="form-control" placeholder="Enter your name" />
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-6">
+                                        <div className="mb-3">
+                                            <label htmlFor="email" className="form-label">Email address</label>
+                                            <input name="email" id="email" type="email" className="form-control" placeholder="Enter your email" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-lg-12">
+                                        <div className="mb-3">
+                                            <label htmlFor="subject" className="form-label">Subject</label>
+                                            <input name="subject" id="subject" type="text" className="form-control" placeholder="Enter Subject" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-lg-12">
+                                        <div className="mb-3">
+                                            <label htmlFor="comments" className="form-label">Message</label>
+                                            <textarea name="comments" id="comments" rows="4" className="form-control" placeholder="Enter your message"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-lg-12 text-end">
+                                        <input type="submit" id="submit" name="send" className="submitBnt btn btn-custom" value="Send Message" />
+                                    </div>
+                                </div>
+                              
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+  )
+}
 
 export default Contact;

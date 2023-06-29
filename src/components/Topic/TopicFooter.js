@@ -1,129 +1,131 @@
 import React from 'react';
-import {submitCode, getSubmissionStatus,doBatchedSubmission,getBatchedSubmissionStatus} from '../../services/judge0';  
-import axios from 'axios';
+import { doBatchedSubmission,getBatchedSubmissionStatus } from '../../services/compiler';
+import { useMarkAssignmentCompleteMutation } from '../../features/topics/topicsSlice';
+import { useFetchCoursesQuery } from '../../features/course/coursesSlice';
+import { useDispatch , useSelector } from 'react-redux';
+import { setUserData } from '../../features/users/userStore';
+import { useParams } from 'react-router-dom';
 
-const TopicFooter = ({code,topicId,courseId, topiccontent, userEmail, completedTopics, setCompletedTopics}) => {
-    //markasComplete
+export const TopicFooter = ({setCode,data, setIsComipling,setResultMessage}) => {
+  const topicData = data;
+  
+  const id = useParams(); 
+  const topic_id = id.topicId;
+  const course_id = id.courseId;
+  const dispatch = useDispatch();
+  const getUser = useSelector(state => state.user.user);
+  const email = getUser.email;
+  let { data:courses } = useFetchCoursesQuery(course_id);
+  const [markAssignmentComplete, { isLoading: isMarking }] = useMarkAssignmentCompleteMutation();
 
-    const markAsComplete = async(event) => {
-        event.preventDefault();
-    
+  const waitForBatchedResults = async (tokens) => {
+  
+  const status = await getBatchedSubmissionStatus(tokens);
+
+  if(status){
+    let pendingSubmissions = false;
+    let successfulTests = 0;
+
+    for (let submission of status.submissions) {
+      if (submission.status_id < 3) {
+        // If any submission is not done yet, wait for 3 seconds and then check again
+        pendingSubmissions = true;
+      } else if (submission.status_id === 3) {
+        // If a submission is done and successful, increment the successfulTests counter
+        successfulTests++;
+      }
+    }
+
+    if (pendingSubmissions) {
+      setTimeout(() => {
+        waitForBatchedResults(tokens);
+      }, 3000);
+      return;  // Exit the function here. We'll check all submissions again after 3 seconds
+    }
+
+    // If we reached this point, it means all submissions are done
+   
+
+    if (successfulTests === status.submissions.length) {
+      setResultMessage(`<div class="alert alert-primary">All test cases passed. </div>`);
+
+      // Mark the assignment as complete
+      try {
+      const updatedUser = await markAssignmentComplete({ topicId: topic_id, courseId: course_id, email: email, token: getUser.token }).unwrap();
+      console.log(getUser);
+      console.log(updatedUser);
+      // getUser.topicsDone[course_id].push(topic_id);
+      let newData = JSON.parse(JSON.stringify(getUser));
       
-    
-        const data = {
-            topicId: topicId,
-            courseId: courseId,
-            userEmail: userEmail
-        }
-    
-        let request = await axios.post('http://localhost:5000/api/markascomplete',data);
-    
-        if(request.status === 200){
-            setCompletedTopics(prevTopics => {
-                if(prevTopics.length === 0){
-                    return [request.data.topicId];
-                } else {
-                    return [...prevTopics, request.data.topicId];
-                }
-            });
-        } else {
-            console.log('Error');
-        }
-    }
-        
+      console.log('course id is '+course_id);
+      if (!newData.topicsDone.hasOwnProperty(course_id)) {
+            newData.topicsDone[course_id] = []; // create a new array for this course_id
+            newData.topicsDone[course_id].push(topic_id);
+            dispatch(setUserData(newData));
+      }
+      if(!newData.topicsDone[course_id].includes(topic_id)){
+         newData.topicsDone[course_id].push(topic_id);
+         dispatch(setUserData(newData));
+      // Update the user in the Redux store
+      
+      console.log('Getting out of here now');
 
+      }
+      
+    } catch (error) {
+      console.log(error);
+    } 
 
-
-    //wait for results 
-    const waitForResults = async (token) => {
-
-        const status = await getSubmissionStatus(token);
-        if(status && status.status.id <= 2){
-            setTimeout(() => {
-                waitForResults(token);
-            }, 1000);
-
-        }else if(status){
-            const result = await getSubmissionStatus(token);
-
-            if(result.status.id === 6){
-                const output =  atob(result.compile_output);
-                
-                console.log(output);
-                
-              }else if(result.status.id===3){
-                console.log(result.stdout);
-                console.log(atob(result.stdout));
-                console.log('Accepted');
-               //setOutput(output);
-              }else if(result.status.id===4){
-                console.log('Failed for a  test case');
-                //setOutput('Failed for a  test case');
-              }
-        }
-        
+    } else {
+      setResultMessage(`<div class="alert alert-danger">${successfulTests}/${status.submissions.length} cases passed </div>`);
     }
 
-    const waitForBatchedResults = async (tokens) => {
-       
-        const status = await getBatchedSubmissionStatus(tokens);
-        if (status) {
-            for (let submission of status.submissions) {
-                if (submission.status_id < 3) {
-                    // If any submission is not done yet, wait for 3 seconds and then check again
-                    setTimeout(() => {
-                        waitForBatchedResults(tokens);
-                    }, 3000);
-                    return;  // Exit the function here. We'll check all submissions again after 3 seconds
-                }
-            }
-            // If we reached this point, it means all submissions are done
-            console.log("All submissions are done. Here are the results:");
-            console.log(status.submissions);
-            for(let index in status.submissions){
-                console.log(status.submissions[index]);
-            }
-           
-        } else {
-            console.error("Failed to get status");
-        }
-    }
-
-
-    const handleClick = async () => {
-        alert('Code Submitted');
-        console.log(topiccontent);
-        if(topiccontent.testCases.length > 0){
-            let value = btoa(code);
-            const request = await doBatchedSubmission(value,62,topiccontent.testInputs,topiccontent.testCases);
-            
-            if(request){
-                console.log(request);
-                let tokens = request.map(obj =>obj.token).join(',');
-                waitForBatchedResults(tokens);
-               
-                
-            }
-
-        }
-        // }else{
-        //     let value  = btoa(code);
-        //     console.log(value);
-        //     const request = await submitCode(value,62,'30');
-    
-        //     if(request){
-        //         console.log(request);
-        //         waitForResults(request.token);
-        //     }
-        // }
-
-    }
-    return (
-        <div className='topic-footer'>
-            <button className='mark-complete' onClick={markAsComplete}>Mark Complete</button>
-            <button className='submit-code' onClick={handleClick}>Submit Code</button>
-        </div>
-    )    
+    setIsComipling(false);
+  }else{
+    console.error("Failed to get status");
+    setIsComipling(false);
+  }
 }
+
+  if (!courses) {
+    return <div>Loading...</div>;
+  }
+
+  console.log('Course is ');
+  
+  const courseArray = courses.courses; 
+  console.log(courseArray);
+
+  const courseData = courseArray.find(course => course._id == course_id);
+  console.log(courseData);
+  const handleCodeSubmissions = async(e) =>{
+    e.preventDefault();
+
+    console.log(setCode);
+     
+     const result =  await doBatchedSubmission(btoa(setCode),courseData.language_code ,topicData.topic.testInputs,topicData.topic.testCases);     
+      setIsComipling(true);
+      if(result){
+        
+        let tokens = result.map(obj =>obj.token).join(',');
+      
+        waitForBatchedResults(tokens);
+      }
+    
+    }
+      
+  
+
+  return (
+    <>
+    <div style={{ backgroundColor: "#f8f9fa", display: "flex", justifyContent: "flex-end", alignItems: "center" , padding: "10px 20px", zIndex:10 }}>
+        <button type="button" className="btn btn-success" onClick={handleCodeSubmissions}>Submit Code</button>
+    </div>
+      
+    </>
+  
+  )
+}
+
 
 export default TopicFooter;

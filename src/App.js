@@ -1,60 +1,101 @@
+// import React from 'react';
+// import logo from './logo.svg';
+// import Home from './Components/Home/Home';
+// import Layout from './Components/Layout';
+// import Login from './Components/Login/Login';
+// import Register from './Components/Register/Register';
+// import Dashboard from './Components/Dashboard/Dashboard';
+// import Topic from './Components/Topic/Topic';
+// import Course from './Components/Course/Course';
+// import { Routes, Route } from 'react-router-dom';
+// import RequireAuth from './features/auth/RequireAuth';
+// import ViewCourse from './Components/ViewCourse/ViewCourse';
+// import { DashboardCourses } from './Components/DashboardCourses/DashboardCourses';
+// import PracticeIDE from './Components/PracticeIDE/PracticeIDE';
+// import Settings from './Components/Settings/Settings';
+// import EmailVerification from './Components/EmailVerification/EmailVerification';
+// import Logout from './Components/Logout/Logout';
+// import Cart from './Components/Cart/Cart';
+// const App = () => {
+
+
+//   return (
+//     <>
+//     {/* <Home /> */}
+//     <Routes>
+//       <Route path="/" element={<Layout />} />
+//         <Route index element={<Home />} />
+//         <Route path='/login' element={<Login />} />
+//         <Route path='/register' element={<Register />} />
+//         <Route path='/course/:id' element={<ViewCourse />} />
+//         <Route path='/users/verify-email/:id' element={<EmailVerification />} />
+//         <Route path='/logout' element={<Logout />} />
+//       {/* requires authentication */}
+//       <Route element={<RequireAuth />}>
+//           <Route path='/dashboard' element={<Dashboard />} />
+//           <Route path='/course/:courseId/topic/:topicId' element={<Topic />} />
+//           <Route path='/dashboard/courses' element={<DashboardCourses />} />
+//           <Route path='/practice-ide' element={<PracticeIDE />} />
+//           <Route path='/settings' element={<Settings />} />
+//           <Route path='/cart' element={<Cart />} />
+
+//         </Route> 
+      
+//     </Routes>  
+//     </>
+//   );
+
+// }
+
+// export default App;
 import React from 'react';
-import { Carousel } from 'react-responsive-carousel';
-import { Route, Routes } from "react-router-dom";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import Header from './components/Header/Header';
-import CarouselComponent from './components/Carousel/Carousel';
-import CoursesComponent from './components/Courses/Courses';
-import Footer from './components/Footer/Footer';
-import CourseContent from './components/CourseContent/CourseContent';
-import TopicContent from './components/CourseContent/TopicContent/TopicContent';
-import Login from './components/Login/Login';
-import Register from './components/Register/Register';
-import About from './components/About/About';
-import Contact from './components/Contact/Contact';
-import Dashboard from './components/Dashboard/Dashboard';
-import Home from './components/Home/Home';
-import Settings from './components/Settings/Setting';
-import PracticeIDE from './components/PracticeIDE/PracticeIDE';
-import VerifyEmail from './components/VerifyEmail/VerifyEmail';
-import TopicComponent from './components/Topic/TopicComponent';
-import { RequireAuth } from "react-auth-kit";
+import logo from './logo.svg';
+import Home from './Components/Home/Home';
+import Layout from './Components/Layout';
+import Login from './Components/Login/Login';
+import Register from './Components/Register/Register';
+import Dashboard from './Components/Dashboard/Dashboard';
+import Topic from './Components/Topic/Topic';
+import Course from './Components/Course/Course';
+import { Routes, Route } from 'react-router-dom';
+import RequireAuth from './features/auth/RequireAuth';
+import ViewCourse from './Components/ViewCourse/ViewCourse';
+import { DashboardCourses } from './Components/DashboardCourses/DashboardCourses';
+import PracticeIDE from './Components/PracticeIDE/PracticeIDE';
+import Settings from './Components/Settings/Settings';
+import EmailVerification from './Components/EmailVerification/EmailVerification';
+import Logout from './Components/Logout/Logout';
+import Cart from './Components/Cart/Cart';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import ForgetPassword from './Components/ForgetPassword/ForgetPassword';
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY); // replace 'your_public_key' with your actual Stripe public key
 
 const App = () => {
+
   return (
-    <Routes>
-       <Route
-          path="/"
-          element={<Home />}
-        ></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path='/register' element={<Register />}></Route>
-        <Route path='/about' element={<About />}></Route>
-        <Route path='/contact' element={<Contact />}></Route>
-        
-        <Route path='/dashboard/' element={<RequireAuth loginPath="/login"> 
-          <Dashboard />
-        </RequireAuth>}></Route>
-        <Route path='/courses/:slug' element={<RequireAuth loginPath="/login">
-          <CourseContent />
-          </RequireAuth>}></Route>
-        
-        <Route path='/courses/:slug/topic/:id' element={<RequireAuth loginPath='/login'>
-          <TopicComponent />
-        </RequireAuth>}></Route>
-        <Route path='/settings' element={<RequireAuth loginPath='/login'>
-          <Settings />
-        </RequireAuth>}></Route>
-        <Route path="/practice-ide" element={<RequireAuth loginPath='/login'>
-          <PracticeIDE />
-        </RequireAuth>}></Route>
-
-        <Route path='/users/verify-email/:id' element={<VerifyEmail />}></Route>
-        
-
-        <Route path="*" element={<h1>Not Found</h1>} />
-
-    </Routes>
+    <Elements stripe={stripePromise}>
+      {/* <Home /> */}
+      <Routes>
+        <Route path="/" element={<Layout />} />
+        <Route index element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/course/:id' element={<ViewCourse />} />
+        <Route path='/users/verify-email/:id' element={<EmailVerification />} />
+        <Route path='/forgot-password' element={<ForgetPassword />} />
+        <Route path='/logout' element={<Logout />} />
+        {/* requires authentication */}
+        <Route element={<RequireAuth />}>
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/course/:courseId/topic/:topicId' element={<Topic />} />
+          <Route path='/dashboard/courses' element={<DashboardCourses />} />
+          <Route path='/practice-ide' element={<PracticeIDE />} />
+          <Route path='/settings' element={<Settings />} />
+          <Route path='/cart' element={<Cart />} />
+        </Route>
+      </Routes>
+    </Elements>
   );
 }
 

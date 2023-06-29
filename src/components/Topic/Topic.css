@@ -1,0 +1,44 @@
+.video-responsive {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
+}
+
+.video-responsive iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    height: 80px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #e96969;
+    border-top: 1px solid #e7e7e7;
+    padding-right:15px;
+}
+
+.btn-mark-done,
+.btn-submit-code {
+    background: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin:20px;
+}
+
+.btn-mark-done:hover,
+.btn-submit-code:hover {
+    background: #2980b9;
+}

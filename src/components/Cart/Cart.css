@@ -1,0 +1,19 @@
+.cart-item {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.cart-item-image {
+    width: 100px;
+    height: 100px;
+}
+
+.cart-item-info {
+    margin-left: 20px;
+}
+
+.cart-total {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
