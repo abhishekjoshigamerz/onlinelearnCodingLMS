@@ -1,4 +1,4 @@
-import React from 'react';
+import {react, useState} from 'react';
 import { doBatchedSubmission,getBatchedSubmissionStatus } from '../../services/compiler';
 import { useMarkAssignmentCompleteMutation } from '../../features/topics/topicsSlice';
 import { useFetchCoursesQuery } from '../../features/course/coursesSlice';
@@ -6,9 +6,13 @@ import { useDispatch , useSelector } from 'react-redux';
 import { setUserData } from '../../features/users/userStore';
 import { useParams } from 'react-router-dom';
 
-export const TopicFooter = ({setCode,data, setIsComipling,setResultMessage}) => {
+const parse = require('html-react-parser');
+
+export const TopicFooter = ({setCode,data, setIsComipling,setResultMessage,setAIChatBotTextArea}) => {
   const topicData = data;
+ 
   
+
   const id = useParams(); 
   const topic_id = id.topicId;
   const course_id = id.courseId;
@@ -114,13 +118,21 @@ export const TopicFooter = ({setCode,data, setIsComipling,setResultMessage}) => 
     
     }
       
+  const teachAi = async(e) =>{
+    e.preventDefault();
+    setAIChatBotTextArea(true);
+  }
+
   
 
   return (
     <>
     <div style={{ backgroundColor: "#f8f9fa", display: "flex", justifyContent: "flex-end", alignItems: "center" , padding: "10px 20px", zIndex:10 }}>
+        <button type='button' className='btn btn-warning' onClick={teachAi}>Teach Me AI</button> &nbsp;&nbsp;
         <button type="button" className="btn btn-success" onClick={handleCodeSubmissions}>Submit Code</button>
     </div>
+
+     
       
     </>
   
