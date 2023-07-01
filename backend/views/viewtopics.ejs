@@ -1,0 +1,167 @@
+<div id="wrapper">
+
+
+    <!-- Topbar Start -->
+    <div class="navbar-custom">
+          <%- include('header/header') %>       
+
+            <!-- LOGO -->
+            <div class="logo-box">
+                <a href="index.html" class="logo logo-light text-center">
+                    <span class="logo-sm">
+                        <img src="/images/logo-sm.png" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="/images/logo-light.png" alt="" height="16">
+                    </span>
+                </a>
+                <a href="index.html" class="logo logo-dark text-center">
+                    <span class="logo-sm">
+                        <img src="/images/logo-sm.png" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="/images/logo-dark.png" alt="" height="16">
+                    </span>
+                </a>
+            </div>
+
+            <ul class="list-unstyled topnav-menu topnav-menu-left mb-0">
+                <li>
+                    <button class="button-menu-mobile disable-btn waves-effect">
+                        <i class="fe-menu"></i>
+                    </button>
+                </li>
+
+                <li>
+                    <h4 class="page-title-main">Dashboard</h4>
+                </li>
+    
+            </ul>
+
+            <div class="clearfix"></div> 
+       
+    </div>
+    <!-- end Topbar -->
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <%- include('sidebar/sidebar') %>
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+ 
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="dropdown float-end">
+                                    <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="mdi mdi-dots-vertical"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item">Another action</a>
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item">Something else</a>
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item">Separated link</a>
+                                    </div>
+                                </div>
+                                
+                    
+                                <h4 class="mt-0 header-title">Course Data</h4>
+                                <p class="text-muted font-14 mb-3">
+                                    For basic styling—light padding and only horizontal dividers—add the base class <code>.table</code> to any <code>&lt;table&gt;</code>.
+                                </p>
+                    
+                               <div class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Course Name</th>
+                                <th>Number of Topics</th>
+                                <th>View All Topics</th>
+                                <th>Number of Users Enrolled</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% let i=1; %>
+                            <% courses.forEach(function(course){ %>
+                            <tr>
+                                <th scope="row"><%= i %></th>
+                                <td><%= course.name%></td>
+                                <td><%= course.topics.length %></td>
+                                <td><a href="/admin/course/alltopics/<%= course._id %>" class="btn btn-info">View All Topics</a></td>
+                                <td>0</td>
+                            </tr>
+                            <% }) %>
+                            <!-- Add more rows here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                            </div>
+                        </div>
+                    
+                        <!-- Import Modal -->
+                        
+                    </div>
+                    
+                    
+                </div>
+
+               
+
+
+            
+                
+            </div> <!-- container-fluid -->
+
+        </div> <!-- content -->
+
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <script>document.write(new Date().getFullYear())</script> &copy; Adminto theme by <a href="">Coderthemes</a> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-md-end footer-links d-none d-sm-block">
+                            <a href="javascript:void(0);">About Us</a>
+                            <a href="javascript:void(0);">Help</a>
+                            <a href="javascript:void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end Footer -->
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+
+</div>
+<!-- END wrapper -->
+
+

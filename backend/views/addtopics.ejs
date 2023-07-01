@@ -1,0 +1,160 @@
+<div id="wrapper">
+
+
+    <!-- Topbar Start -->
+    <div class="navbar-custom">
+          <%- include('header/header') %>       
+
+            <!-- LOGO -->
+            <div class="logo-box">
+                <a href="index.html" class="logo logo-light text-center">
+                    <span class="logo-sm">
+                        <img src="/images/logo-sm.png" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="/images/logo-light.png" alt="" height="16">
+                    </span>
+                </a>
+                <a href="index.html" class="logo logo-dark text-center">
+                    <span class="logo-sm">
+                        <img src="/images/logo-sm.png" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="/images/logo-dark.png" alt="" height="16">
+                    </span>
+                </a>
+            </div>
+
+            <ul class="list-unstyled topnav-menu topnav-menu-left mb-0">
+                <li>
+                    <button class="button-menu-mobile disable-btn waves-effect">
+                        <i class="fe-menu"></i>
+                    </button>
+                </li>
+
+                <li>
+                    <h4 class="page-title-main">Dashboard</h4>
+                </li>
+    
+            </ul>
+
+            <div class="clearfix"></div> 
+       
+    </div>
+    <!-- end Topbar -->
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <%- include('sidebar/sidebar') %>
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+ 
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h4 class="header-title">Add Topics</h4>
+
+                                <p class="sub-header">
+                                    You can add topics of a course here in 2 ways. one by importing excel sheet with topics and other is by using the form below.
+                                </p>
+
+                                <form class="form-horizontal" method="post" action="/admin/add-topics-data">
+                                    <div class="row mb-3">
+                                        <label for="topicName" class="col-4 col-xl-3 col-form-label">Topic Name</label>
+                                        <div class="col-8 col-xl-9">
+                                            <input type="text" class="form-control" id="topicName" placeholder="Add Topic Name" name="topicName">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="selectCourse" class="col-4 col-xl-3 col-form-label">Select Course</label>
+                                        <div class="col-8 col-xl-9">
+                                            <select class="form-select" id="selectCourse" name="courseId">
+                                                <!-- Options should be dynamically generated based on available courses -->
+                                                <option selected>Select Course</option>
+                                                <% courses.forEach(function(course) { %>
+                                                    <option value="<%= course._id %>"><%= course.name %></option>
+                                                <% }); %>
+                                                
+                                                
+                                             
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="topicDescription" class="col-4 col-xl-3 col-form-label">Topic Description</label>
+                                        <div class="col-8 col-xl-9">
+                                            <textarea class="form-control my-textarea" id="topicDescription" name="topicDescription" placeholder="Add Topic Description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="subscribe">Topic is a video:</label>
+                                        <input type="checkbox" id="isVideo" name="isVideo" value="true">
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="testCase" class="col-4 col-xl-3 col-form-label">Topic Test Case</label>
+                                        <div class="col-8 col-xl-9">
+                                            <textarea class="form-control" name="testCases" id="testCase" placeholder="Add Topic Test Case"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="testCase" class="col-4 col-xl-3 col-form-label">Topic Input Case</label>
+                                        <div class="col-8 col-xl-9">
+                                            <textarea class="form-control" name="testInputs" id="testinput" placeholder="Add Topic Test Case"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="justify-content-end row">
+                                        <div class="col-8 col-xl-9">
+                                            <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div> <!-- end card-body -->
+                        </div> <!-- end card -->
+                    </div> <!-- end col -->
+                </div>
+
+            </div> <!-- container-fluid -->
+
+        </div> <!-- content -->
+
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <script>document.write(new Date().getFullYear())</script> &copy; Adminto theme by <a href="">Coderthemes</a> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-md-end footer-links d-none d-sm-block">
+                            <a href="javascript:void(0);">About Us</a>
+                            <a href="javascript:void(0);">Help</a>
+                            <a href="javascript:void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end Footer -->
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+
+</div>
+<!-- END wrapper -->
+
+
+
+
