@@ -3,10 +3,12 @@ import React from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useSelector,useDispatch } from 'react-redux';
 import { clearCart } from '../../features/cart/cartStore';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './StripeCheckout.css'; 
 const StripeCheckout = ({totalPrice,courseIds}) => {
-  
+  const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
   const email =  useSelector((state) => state.auth.user);
@@ -84,12 +86,17 @@ const emptyCart = async(event)=>{
         if (confirmedPayment) {
             console.log('Payment done successfully');
             //redirect user now 
+            toast.success('Payment done successfully! Just Login again to see your courses');
+            dispatch(clearCart());
+            navigate('/dashboard');
         }else{
             console.log('Payment failed');
-        }
+            toast.error('Payment failed due to some error. Please try again later.');
+          }
 
       } catch (error) {
           console.log(error);
+          toast.error('Internal server error 500, Transaction failed.');
       }  
       
 

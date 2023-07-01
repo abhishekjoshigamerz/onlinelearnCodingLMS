@@ -1,0 +1,36 @@
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+.topic-sidebar {
+    flex: 2;
+    
+    background-color: #f2f2f2;
+    overflow: scroll;
+    overflow-y: scroll;
+    max-height: 90vh;
+    padding-bottom: 20px;
+    position: sticky;
+    top: 0;
+    
+
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.topic-sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.topic-sidebar {
+    -ms-overflow-style: none;
+}
+
+/* Hide scrollbar for Firefox */
+.topic-sidebar {
+    scrollbar-width: none;
+}

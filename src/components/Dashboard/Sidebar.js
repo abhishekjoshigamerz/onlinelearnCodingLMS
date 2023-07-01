@@ -3,11 +3,8 @@ import { NavLink } from 'react-router-dom';
 const Sidebar = () => {
   return (
     <>
-    
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-          <div className="text-center "  style={{fontSize:'24px',  backgroundColor:'#f5f5f5', borderRadius:'10px', padding:'10px'}} >
-          <NavLink className="nav-link" aria-current="page" to={'/'} > CodeMaster </NavLink>
-          </div>
+          
       <div class="position-sticky pt-3">
         
        <ul className="nav flex-column">

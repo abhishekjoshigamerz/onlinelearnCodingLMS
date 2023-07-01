@@ -2,7 +2,7 @@ import  { react,useState,useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-
+import { toast } from 'react-toastify'; 
 import { setCredentials } from '../../features/auth/authSlice';
 import { useLoginMutation } from '../../features/auth/authApiSlice';
 import './Login.css';
@@ -25,7 +25,7 @@ const Login = () => {
         dispatch(setCredentials({...userData,email} ));
         navigate('/dashboard'); 
     } catch (error) {
-      
+        toast.error('Email/Password is incorrect'); 
     }
 
   };

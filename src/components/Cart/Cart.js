@@ -3,10 +3,12 @@ import React from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { removeCartData } from '../../features/cart/cartStore';
 import DashboardHeader from '../Dashboard/DashboardHeader';
+import { NavLink, useNavigate } from 'react-router-dom';
+
 import StripeCheckout from '../StripeCheckout/StripeCheckout';
 import './Cart.css';
 const Cart = () => {
-
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
   const isCartEmpty = Object.keys(cart).length;

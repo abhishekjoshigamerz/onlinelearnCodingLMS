@@ -37,6 +37,18 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 }
             })
         }),
+        registerUser: builder.mutation({
+            query: ({email,password,fullName})=>({
+                url: `/users/register/`,
+                method: 'POST',
+                body: {
+                    email,
+                    password,
+                    fullName
+                }
+            })
+        }),
+
 
     }),
     
@@ -48,6 +60,7 @@ export const {
     useChangePasswordMutation,
     useRecentTransactionsQuery,
     useChangePasswordEmailMutation,
+    useRegisterUserMutation,
 } = usersApiSlice;
 
 
