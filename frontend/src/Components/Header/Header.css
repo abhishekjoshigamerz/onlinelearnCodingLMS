@@ -1,0 +1,84 @@
+.navbar-custom {
+    padding: 20px 0px;
+    width: 100%;
+    border-radius: 0px;
+    z-index: 999;
+    margin-bottom: 0px;
+    transition: all 0.5s ease-in-out;
+}
+
+.navbar-custom .logo .logo-light {
+    display: inline-block;
+}
+
+.navbar-custom .logo .logo-dark {
+    display: none;
+}
+
+.navbar-custom .navbar-nav .nav-item .nav-link {
+    line-height: 26px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.4s;
+    padding: 6px 10px;
+    margin: 0 7px;
+    font-family: "Karla", sans-serif;
+}
+
+.navbar-custom .navbar-nav .nav-item .nav-link:hover,
+.navbar-custom .navbar-nav .nav-item .nav-link.active,
+.navbar-custom .navbar-nav .nav-item .nav-link:active {
+    color: #ffffff;
+}
+
+.navbar-toggler {
+    font-size: 24px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    color: #ffffff;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.15rem #3a59af;
+}
+
+/*--- navbar sticky ---*/
+.nav-sticky.navbar-custom {
+    margin-top: 0px;
+    padding: 10px 0px;
+    background-color: #ffffff;
+    box-shadow: 0 10px 33px -14px rgba(0, 0, 0, 0.1);
+}
+
+.nav-sticky.navbar-custom .logo .logo-dark {
+    display: inline-block;
+}
+
+.nav-sticky.navbar-custom .logo .logo-light {
+    display: none;
+}
+
+.nav-sticky.navbar-custom .navbar-nav .nav-item .nav-link {
+    color: rgba(40, 40, 46, 0.8);
+}
+
+.nav-sticky.navbar-custom .navbar-nav .nav-item .nav-link:hover,
+.nav-sticky.navbar-custom .navbar-nav .nav-item .nav-link.active,
+.nav-sticky.navbar-custom .navbar-nav .nav-item .nav-link:active {
+    color: #672fed;
+}
+
+ .cart-badge {
+     display: inline-block;
+     color: #fff;
+     background-color: red;
+     border-radius: 50%;
+     /* This makes it circular */
+     text-align: center;
+     width: 20px;
+     /* You can adjust the size as you need */
+     height: 20px;
+     line-height: 20px;
+     /* This should be the same as your height to vertically center your text */
+     font-size: 12px;
+     /* Adjust based on your design */
+ }

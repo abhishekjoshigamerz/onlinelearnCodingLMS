@@ -1,0 +1,168 @@
+<div id="wrapper">
+
+
+    <!-- Topbar Start -->
+    <div class="navbar-custom">
+          <%- include('header/header') %>       
+
+            <!-- LOGO -->
+          <%- include('partials/logobox') %>
+
+    </div>
+    <!-- end Topbar -->
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <%- include('sidebar/sidebar') %>
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+ 
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h4 class="header-title">Add Courses</h4>
+                                <p class="modal-content">Utilize the 'Import from Excel' feature to effortlessly import your courses data directly from Excel spreadsheets.</p>
+                                <!-- Import button triggering a modal -->
+                                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#importModal">
+                                    Import from Excel
+                                </button>
+                                <p class="sub-header">
+                                    You can add courses here in 2 ways. one by importing excel sheet with topics and other is by using the form below.
+                                </p>
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <h4 class="mb-3 header-title">Horizontal form</h4>
+
+                                        <form class="form-horizontal" action="/admin/add-courses" method="POST" enctype="multipart/form-data">
+                                            <div class="row mb-3">
+                                                <label for="courseTitle" class="col-4 col-xl-3 col-form-label">Course Title</label>
+                                                <div class="col-8 col-xl-9">
+                                                    <input type="text" class="form-control" id="courseTitle" name="courseTitle" placeholder="Add Course Title" >
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="courseDescription" class="col-4 col-xl-3 col-form-label">Course Description</label>
+                                                <div class="col-8 col-xl-9">
+                                                    <textarea class="form-control" id="courseDescription" name="courseDescription" placeholder="Add Course Description"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="courseImage" class="col-4 col-xl-3 col-form-label">Course Image</label>
+                                                <div class="col-8 col-xl-9">
+                                                    <input type="file" class="form-control" id="courseImage" name="courseImage">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="courseSummary" class="col-4 col-xl-3 col-form-label">Course Summary</label>
+                                                <div class="col-8 col-xl-9">
+                                                    <textarea class="form-control" id="courseSummary" name="courseSummary"
+                                                        placeholder="Add Course Summary"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="courseTitle" class="col-4 col-xl-3 col-form-label">Course Price</label>
+                                                <div class="col-8 col-xl-9">
+                                                    <input type="text" class="form-control" id="coursePrice" name="coursePrice" placeholder="Add Course Price">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="courseTitle" class="col-4 col-xl-3 col-form-label">Course Language Code</label>
+                                                <div class="col-8 col-xl-9">
+                                                    <input type="text" class="form-control" id="courselanguageCode" name="courselanguageCode" placeholder="Add Course Language Code">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="courseSummary" class="col-4 col-xl-3 col-form-label">Course Primary Code</label>
+                                                <div class="col-8 col-xl-9">
+                                                    <textarea class="form-control" id="coursePrimaryCode" name="coursePrimaryCode"
+                                                        placeholder="Add Course Primary Code"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="justify-content-end row">
+                                                <div class="col-8 col-xl-9">
+                                                    <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        
+
+                                    </div>  <!-- end card-body -->
+                                </div>
+                               
+                                <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="importModalLabel">Import Data from Excel</h5>
+                                                
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form enctype="multipart/form-data" method="post" action="/admin/export-excel-data">
+                                                    <div class="mb-3">
+                                                        <label for="excelFile" class="form-label">Excel File</label>
+                                                        <input class="form-control" type="file" id="excelFile" name="excelFile" >
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary">Import</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                               
+
+                            </div> <!-- end card-body -->
+                        </div> <!-- end card -->
+                    </div> <!-- end col -->
+                </div>
+
+               
+
+
+            
+                
+            </div> <!-- container-fluid -->
+
+        </div> <!-- content -->
+
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <script>document.write(new Date().getFullYear())</script> &copy; Adminto theme by <a href="">Coderthemes</a> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-md-end footer-links d-none d-sm-block">
+                            <a href="javascript:void(0);">About Us</a>
+                            <a href="javascript:void(0);">Help</a>
+                            <a href="javascript:void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end Footer -->
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+
+</div>
+<!-- END wrapper -->
+
+

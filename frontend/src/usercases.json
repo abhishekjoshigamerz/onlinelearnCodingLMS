@@ -1,0 +1,11 @@
+1.btoa("Hello World");
+'SGVsbG8gV29ybGQ='
+
+2. btoa('Hello Java');
+'SGVsbG8gSmF2YQ=='
+
+3.btoa('Hello Program');
+SGVsbG8gUHJvZ3JhbQ==
+
+4. btoa('Hello Python');
+SGVsbG8gUHl0aG9u
