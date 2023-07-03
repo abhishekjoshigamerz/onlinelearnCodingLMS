@@ -39,12 +39,13 @@ const App = () => {
         <Route path='/users/verify-email/:id' element={<EmailVerification />} />
         <Route path='/forgot-password' element={<ForgetPassword />} />
         <Route path='/logout' element={<Logout />} />
+        <Route path='/practice-ide' element={<PracticeIDE />} />
         {/* requires authentication */}
         <Route element={<RequireAuth />}>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/course/:courseId/topic/:topicId' element={<Topic />} />
           <Route path='/dashboard/courses' element={<DashboardCourses />} />
-          <Route path='/practice-ide' element={<PracticeIDE />} />
+          
           <Route path='/settings' element={<Settings />} />
           <Route path='/cart' element={<Cart />} />
         </Route>

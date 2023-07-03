@@ -30,7 +30,7 @@ module.exports.registerUser = async function(req, res){
             
             let data = await user.save();
             if(data){
-                let msg = `Please verify your email by clicking on the link below \n http://localhost:3000/users/verify-email/${user._id}`;
+                let msg = `Please verify your email by clicking on the link below \n https://www.codemaster99.xyz/users/verify-email/${user._id}`;
                 await sendVerificationEmail(req.body.email, msg);
                 
                 return res.status(200).json({status:200,message: "User registered successfully"});
@@ -89,10 +89,7 @@ module.exports.loginUser = async function(req, res){
         console.log(user._id);
 
         let userRole = user.userRole;
-        // let id =  user._id.toString();
-        // console.log(id.toString());
-        // const update = await user.findByIdAndUpdate(id,{refreshToken:refreshToken});
-
+       
         let id = user._id.toString();
         let emailVerified = user.emailVerified;
         const updatedUser = await User.findByIdAndUpdate(id, { refreshToken: refreshToken }, { new: true });

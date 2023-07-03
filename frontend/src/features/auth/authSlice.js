@@ -7,7 +7,7 @@ const authSlice = createSlice({
     initialState:{user:null,token:null},
     reducers: {
         setCredentials: (state, action) => {
-            console.log('Setting credentials');
+            
             console.log(action.payload);
           const { email, accessToken,id,emailVerified } = action.payload;
           state.user = email;
