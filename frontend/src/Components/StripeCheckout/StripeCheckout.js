@@ -70,7 +70,7 @@ const emptyCart = async(event)=>{
       try {
         console.log('[PaymentMethod]', paymentMethod);
         const {id} = paymentMethod;
-        const {data} = await axios.post('http://localhost:5000/api/make-payment',{
+        const {data} = await axios.post('https://code.freeeducationindia.com/api/make-payment',{
             id: id,
             userId:user_id,
             userEmail: email,

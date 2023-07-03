@@ -10,7 +10,7 @@ const EmailVerification = () => {
     useEffect(() => {
         const verifyUser = async () => {
             let userId = id.id;
-            let response = await axios.get(`http://localhost:5000/api/users/verify-email/${userId}`);
+            let response = await axios.get(`https://code.freeeducationindia.com/api/users/verify-email/${userId}`);
             if(response.status == 204){
                 console.log('verified');
                 setVerified(true);

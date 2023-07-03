@@ -41,7 +41,8 @@ module.exports.registerUser = async function(req, res){
     }catch(err){
         console.log(err);
             return res.json(500, {
-                message: "Internal Server Error"
+                message: "Internal Server Error",
+                error: err
             });
         }
     }

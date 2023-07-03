@@ -14,7 +14,7 @@ const CourseSidebar = () => {
         const fetchTopics = async () => {
 
           try {
-            const response =  await axios.get(`http://localhost:5000/api/course/${slug}`);
+            const response =  await axios.get(`http://https://code.freeeducationindia.com/api/course/${slug}`);
             console.log(response.data.course);
             setTitle(response.data.course.name);
             console.log(response.data.Topics);

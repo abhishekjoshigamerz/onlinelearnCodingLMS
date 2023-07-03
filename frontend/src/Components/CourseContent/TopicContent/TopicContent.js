@@ -18,7 +18,7 @@ const TopicContent = () => {
     useEffect(() => {
         const fetchContent = async () => {
           
-            const response = await axios.get(`http://localhost:5000/api/gettopic/${id}`);
+            const response = await axios.get(`http://https://code.freeeducationindia.com/api/gettopic/${id}`);
             const getTopic = response.data.topic;
             setTopicContent(getTopic);   
         }

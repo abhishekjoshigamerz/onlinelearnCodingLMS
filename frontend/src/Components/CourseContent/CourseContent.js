@@ -18,7 +18,7 @@ const CourseContent = () => {
     useEffect(() => {
         const fetchContent = async () => {
           try {
-            const response = await axios.get(`http://localhost:5000/api/course/${slug}`);
+            const response = await axios.get(`http://https://code.freeeducationindia.com/api/course/${slug}`);
             console.log(response.data.topics);
             setCourse(response.data.course);
             setTopic(response.data.topics);

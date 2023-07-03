@@ -12,7 +12,7 @@ const refreshApi = createRefresh({
       authUserState
     }) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/refreshToken", {'refresh': refreshToken}, {
+      const response = await axios.post("http://https://code.freeeducationindia.com/api/refreshToken", {'refresh': refreshToken}, {
         headers: {'Authorization': `Bearer ${authToken}`}}
       )
       return {

@@ -4,7 +4,7 @@ import { setCredentials, logOut } from '../../features/auth/authSlice';
 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:5000/api/',
+    baseUrl: 'https://code.freeeducationindia.com/api/',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token;
@@ -41,14 +41,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     return result;
 
 }
-
-
-
-
-
-
-
-
 
 export const apiSlice = createApi({
     baseQuery: baseQueryWithReauth,

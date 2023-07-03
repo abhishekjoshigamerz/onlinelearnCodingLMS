@@ -22,8 +22,8 @@ const Setting = () => {
             return;
         }
         
-        const url = "http://localhost:5000/api/users/change-password";
-        //url is http://localhost:5000/api/users/change-password 
+        const url = "http://https://code.freeeducationindia.com/api/users/change-password";
+        //url is http://https://code.freeeducationindia.com/api/users/change-password 
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': token    

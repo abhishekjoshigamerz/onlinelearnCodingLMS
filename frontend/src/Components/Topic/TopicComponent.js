@@ -34,7 +34,7 @@ const TopicComponent = () => {
     useEffect(() => {
         
         const fetchContent = async () => {
-            const response = await axios.get(`http://localhost:5000/api/course/${courseId}`);
+            const response = await axios.get(`http://https://code.freeeducationindia.com/api/course/${courseId}`);
             if(response){
              
                 // setTitle(response.data.course.name);
@@ -51,7 +51,7 @@ const TopicComponent = () => {
     //set content now 
     useEffect(() => {
         const fetchContent = async () => {
-            const response = await axios.get(`http://localhost:5000/api/gettopic/${topicId}`);
+            const response = await axios.get(`http://https://code.freeeducationindia.com/api/gettopic/${topicId}`);
 
             if(response){
                
@@ -69,7 +69,7 @@ const TopicComponent = () => {
     //fetch users data
     useEffect(() => {
         const fetchContent = async () => {
-            const request = await axios.get(`http://localhost:5000/api/getcompletedtopics/${courseId}/${userEmail().email}`);
+            const request = await axios.get(`http://https://code.freeeducationindia.com/api/getcompletedtopics/${courseId}/${userEmail().email}`);
             
             if(request.status==200){
                 console.log(request.data.completedTopics); 

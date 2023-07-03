@@ -20,7 +20,7 @@ const Courses = () => {
     }
 
     console.log(data);
-    const request = await axios.post(`http://localhost:5000/api/courses/enroll/`,data);
+    const request = await axios.post(`http://https://code.freeeducationindia.com/api/courses/enroll/`,data);
 
     if (request.status == 204) {
     //redirect to course page 
@@ -35,7 +35,7 @@ const Courses = () => {
 
   useEffect(() => {
     const getCourses = async () => {
-      const response = await axios.get('http://localhost:5000/api/courses');
+      const response = await axios.get('http://https://code.freeeducationindia.com/api/courses');
       console.log(response.data.courses);
       setCourses(response.data.courses);
     }

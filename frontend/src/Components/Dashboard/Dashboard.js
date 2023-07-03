@@ -23,7 +23,7 @@ const Dashboard = () => {
 
     e.preventDefault();
     alert('Email sent successfully!');  
-    const request = await axios.get(`http://localhost:5000/api/users/send-verification-email/${userID}`); 
+    const request = await axios.get(`https://code.freeeducationindia.com/api/users/send-verification-email/${userID}`); 
      if(request.status == 204){
       setEmailIsNotVerified('Email has been sent!'); 
     }
