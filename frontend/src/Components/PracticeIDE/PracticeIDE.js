@@ -1,15 +1,23 @@
-import {react, useState} from 'react'
+import React,{ useState} from 'react'
 import DashboardHeader from '../Dashboard/DashboardHeader';
 import Sidebar from '../Dashboard/Sidebar';
+
+// import AceEditor from "react-ace-builds";
+
 import AceEditor from 'react-ace';
-import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/mode-java';
-import 'ace-builds/src-noconflict/mode-python';
-import 'ace-builds/src-noconflict/mode-c_cpp'; 
-import 'ace-builds/src-noconflict/ext-language_tools'; // Include the language tools extension for autocompletion
-import 'ace-builds/src-noconflict/snippets/java'; // Include the Java snippets
-import 'ace-builds/src-noconflict/snippets/python'; // Include the Python snippets
-import 'ace-builds/src-noconflict/snippets/c_cpp'; // Include the C++ snippets
+import 'ace-builds/src-noconflict/theme-github';
+// import "ace-builds/src-noconflict/mode-java";
+// import "ace-builds/src-noconflict/theme-github";
+// import "ace-builds/src-noconflict/ext-language_tools";
+// import 'ace-builds/src-noconflict/theme-monokai';
+// import 'ace-builds/src-noconflict/mode-java';
+// import 'ace-builds/src-noconflict/mode-python';
+// import 'ace-builds/src-noconflict/mode-c_cpp'; 
+// import 'ace-builds/src-noconflict/ext-language_tools'; // Include the language tools extension for autocompletion
+// import 'ace-builds/src-noconflict/snippets/java'; // Include the Java snippets
+// import 'ace-builds/src-noconflict/snippets/python'; // Include the Python snippets
+// import 'ace-builds/src-noconflict/snippets/c_cpp'; // Include the C++ snippets
 
 import { useFetchCourseByIdQuery } from '../../features/course/coursesSlice';
 import { useParams } from 'react-router-dom';

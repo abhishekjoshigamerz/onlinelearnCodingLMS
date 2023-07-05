@@ -12,6 +12,7 @@ import RequireAuth from './features/auth/RequireAuth';
 import ViewCourse from './Components/ViewCourse/ViewCourse';
 import { DashboardCourses } from './Components/DashboardCourses/DashboardCourses';
 import PracticeIDE from './Components/PracticeIDE/PracticeIDE';
+import MonacoTesting from './Components/AceTesting/AceTesting';
 import Settings from './Components/Settings/Settings';
 import EmailVerification from './Components/EmailVerification/EmailVerification';
 import Logout from './Components/Logout/Logout';
@@ -36,10 +37,11 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/course/:id' element={<ViewCourse />} />
+        <Route path='/practice-ide' element={<MonacoTesting />} />
         <Route path='/users/verify-email/:id' element={<EmailVerification />} />
         <Route path='/forgot-password' element={<ForgetPassword />} />
         <Route path='/logout' element={<Logout />} />
-        <Route path='/practice-ide' element={<PracticeIDE />} />
+        
         {/* requires authentication */}
         <Route element={<RequireAuth />}>
           <Route path='/dashboard' element={<Dashboard />} />

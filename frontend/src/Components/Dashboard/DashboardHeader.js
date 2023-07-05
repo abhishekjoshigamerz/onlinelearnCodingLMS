@@ -9,17 +9,17 @@ const DashboardHeader = () => {
   let itemsNumber = Object.keys(cart).length;
 
   return (
-    <Navbar expand="lg" bg="white" variant="white" style={{zIndex: 20, position: 'sticky', top: 0}}>
-      <Navbar.Brand as={NavLink} to="/dashboard" className="text-dark">CodeMaster</Navbar.Brand>
+    <Navbar expand="lg" bg="dark" variant="dark" style={{zIndex: 20, position: 'sticky', top: 0}}>
+      <Navbar.Brand as={NavLink} to="/dashboard" className="text-white">CodeMaster</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
         <Nav>
-          <Nav.Link as={NavLink} to="/cart" className="text-black">
+          <Nav.Link as={NavLink} to="/cart" className="text-white">
             Cart &nbsp;
             {itemsNumber !== 0 && 
-              <Badge pill variant="text-black" className="ml-2 text-black">{itemsNumber}</Badge>}
+              <Badge pill variant="light" className="ml-2">{itemsNumber}</Badge>}
           </Nav.Link>
-          <Nav.Link as={NavLink} to="/logout" className="text-black">Sign out</Nav.Link>
+          <Nav.Link as={NavLink} to="/logout" className="text-white">Sign out</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

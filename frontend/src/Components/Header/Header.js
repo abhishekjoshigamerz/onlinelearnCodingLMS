@@ -1,82 +1,46 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import './Header.css';
+import { Navbar, Nav, Container } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
+
 export const Header = () => {
-  const logoLight='';
-  const logoDark='';
-    const cart = useSelector((state) => state.cart.cart);
-    
-    let itemsNumber = Object.keys(cart).length;
-    
-    const user = useSelector((state) => state.auth.user);
-   
+  const cart = useSelector((state) => state.cart.cart);
+
+  let itemsNumber = Object.keys(cart).length;
+  
+  const user = useSelector((state) => state.auth.user);
 
   return (
-    <div>
-        <nav className="navbar navbar-expand-lg fixed-top navbar-custom sticky sticky-dark nav-sticky" id="nav-sticky">
-            <div className="container-fluid">
-               
-                <a className="logo text-uppercase" href="/">
-                    CodeMaster
-                </a>
-
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <i className="mdi mdi-menu"></i>
-                </button>
-                {
-                    !user ?  <div className="collapse navbar-collapse" id="navbarCollapse">
-                    <ul className="navbar-nav ms-auto" id="mySidenav">
-                        <li className="nav-item">
-                            <a href="/" className="nav-link active">Home</a>
-                        </li>
-                        <li className="nav-item">
-                            <a href="#about" className="nav-link">About us</a>
-                        </li>
-                       
-                        <li className="nav-item">
-                            <a href="#courses" className="nav-link">Courses</a>
-                        </li>
-                         <li className="nav-item">
-                            <NavLink to={'/login'} className="nav-link">Login </NavLink>
-                        </li>
-                         <li className="nav-item">
-                            <NavLink to={'/register'} className="nav-link">Register </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink to={'/cart'} className="nav-link">Cart {itemsNumber!=0 ? <span className="cart-badge">{itemsNumber}</span> : ''} </NavLink>
-                        </li>
-                    </ul>
-                </div>
-                : <div className="collapse navbar-collapse" id="navbarCollapse">
-                     <ul className="navbar-nav ms-auto" id="mySidenav">
-                        <li className="nav-item">
-                            <a href="/" className="nav-link active">Home</a>
-                        </li>
-                         <li className="nav-item">
-                            <a href="/dashboard" className="nav-link ">Dashboard</a>
-                        </li>
-                        <li className="nav-item">
-                            <a href="#about" className="nav-link">About us</a>
-                        </li>
-                       
-                        <li className="nav-item">
-                            <a href="#courses" className="nav-link">Courses</a>
-                        </li>
-                        
-                        <li className="nav-item">
-                            <NavLink to={'/cart'} className="nav-link">Cart {itemsNumber!=0 ? <span className="cart-badge">{itemsNumber}</span> : ''} </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink to={'/logout'} className="nav-link"> Sign Out </NavLink>
-                        </li>
-                    </ul>
-                  </div>
-                }
-            </div>
-      </nav>
-    </div>
-  )
-}
+    <Navbar expand="lg" variant="light" bg="light">
+      <Container>
+        <Navbar.Brand as={NavLink} to="/">CodeMaster</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
+            {!user ? (
+              <>
+                <Nav.Link as={NavLink} exact to="/">Home</Nav.Link>
+                <Nav.Link href="#about">About Us</Nav.Link>
+                <Nav.Link href="#courses">Courses</Nav.Link>
+                <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
+                <Nav.Link as={NavLink} to="/register">Register</Nav.Link>
+                <Nav.Link as={NavLink} to="/cart">Cart {itemsNumber !== 0 && <span className="cart-badge">{itemsNumber}</span>}</Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link as={NavLink} exact to="/">Home</Nav.Link>
+                <Nav.Link as={NavLink} to="/dashboard">Dashboard</Nav.Link>
+                <Nav.Link href="#about">About Us</Nav.Link>
+                <Nav.Link href="#courses">Courses</Nav.Link>
+                <Nav.Link as={NavLink} to="/cart">Cart {itemsNumber !== 0 && <span className="cart-badge">{itemsNumber}</span>}</Nav.Link>
+                <Nav.Link as={NavLink} to="/logout">Sign Out</Nav.Link>
+              </>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+};
 
 export default Header;

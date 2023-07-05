@@ -3,6 +3,8 @@ import { Form, Button, Alert, Card, Container, Row, Col } from 'react-bootstrap'
 import { useRegisterUserMutation } from '../../features/users/usersSlice';
 import { toast } from 'react-toastify'; 
 import { NavLink } from 'react-router-dom';
+import { Header } from '../Header/Header';
+
 function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -61,6 +63,8 @@ function Register() {
     }
 
     return (
+        <>
+        <Header />
         <Container fluid>
             <Row className="justify-content-center align-items-center min-vh-100">
 
@@ -132,6 +136,7 @@ function Register() {
                 </Col>
             </Row>
         </Container>
+        </>
     );
 }
 

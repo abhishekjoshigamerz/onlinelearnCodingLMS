@@ -61,7 +61,7 @@ const ViewCourse = () => {
                 <div>
             <Header />
            
-            <div className="course-header bg-dark text-white p-3 d-flex justify-content-between align-items-center mt-5">
+            <div className="course-header bg-dark text-white p-3 d-flex justify-content-between align-items-center ">
     <div className="col-md-8 col-12 d-flex flex-column align-items-center me-auto">
         <h1>{data.course.name}</h1>
         <p>{data.course.summary}</p>

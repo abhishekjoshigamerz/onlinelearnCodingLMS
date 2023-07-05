@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify'; 
 import { setCredentials } from '../../features/auth/authSlice';
 import { useLoginMutation } from '../../features/auth/authApiSlice';
+import { Header } from '../Header/Header';
 import './Login.css';
 
 const Login = () => {
@@ -31,6 +32,8 @@ const Login = () => {
   };
 
   return (
+    <>
+    <Header />  
     <div className="login-container d-flex justify-content-center align-items-center">
       <div className="card shadow-lg">
         <div className="card-body">
@@ -66,6 +69,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
