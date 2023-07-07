@@ -1,15 +1,6 @@
 
 import {react, useState, useEffect,useRef} from 'react';
-import AceEditor from 'react-ace';
-import 'ace-builds/src-noconflict/theme-monokai';
-import 'ace-builds/src-noconflict/mode-java';
-import 'ace-builds/src-noconflict/mode-python';
-import 'ace-builds/src-noconflict/mode-c_cpp';
-// Import necessary extensions
-import 'ace-builds/src-noconflict/ext-language_tools'; // Include the language tools extension for autocompletion
-import 'ace-builds/src-noconflict/snippets/java'; // Include the Java snippets
-import 'ace-builds/src-noconflict/snippets/python'; // Include the Python snippets
-import 'ace-builds/src-noconflict/snippets/c_cpp'; // Include the C++ snippets
+import Editor from '@monaco-editor/react';
 
 import { useParams } from 'react-router-dom';
 import { useFetchTopicsQuery } from '../../features/topics/topicsSlice';
@@ -18,11 +9,6 @@ import AIChatBot from './AIChatBot';
 import TopicFooter from './TopicFooter';
 import Modal from 'react-modal';
 const parse = require('html-react-parser');
-
-
-
-
-
 
 const TopicContent = () => {
 
@@ -95,27 +81,18 @@ const TopicContent = () => {
             )}
         </div>
         <div className="col-md-6 h-100">
-            <AceEditor
-              mode="java"
-              theme="monokai"
-              name="ace-editor-course"
-              width='200%' 
-              height='100%' 
-              ref={aceRef}    
-              fontSize={14}
-              showPrintMargin={true}
-              showGutter={true}
-              highlightActiveLine={true}
-              editorProps={{ $blockScrolling: Infinity }}
-              defaultValue={`public class Main {\n public static void main(String[] args){\n System.out.println("Hello World");\n }\n}`}
-              onChange={newCode => setCodeState(newCode)}
-              setOptions={{
-                enableBasicAutocompletion: true,
-                enableLiveAutocompletion: true,
-                enableSnippets: false,
-                showLineNumbers: true,
-                tabSize: 2,
-              }} />
+            <Editor
+                        height="90vh"
+                        language="java"
+                        value={setCode}
+                        theme='vs-dark'
+                         options={{
+                            automaticLayout: true,
+                            wordWrap: 'on',
+                            colorDecorators: true
+                        }}
+                        onChange={value => setCodeState(value)}
+            />
         </div>
       </div>
               

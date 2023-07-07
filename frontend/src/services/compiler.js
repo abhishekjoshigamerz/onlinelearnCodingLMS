@@ -86,7 +86,7 @@ export const doBatchedSubmission = async (source_code, language_id, stdin,exp_ou
 export const getBatchedSubmissionStatus = async (token) => {
 
   try{
-  let result =  await axios.get(`${JUDGE0_API}/submissions/batch?tokens=${token}&base64_encoded=true&fields=token,stdout,stderr,status_id,language_id`);
+  let result =  await axios.get(`${JUDGE0_API}/submissions/batch?tokens=${token}&base64_encoded=true&fields=token,stdout,stderr,status_id,language_id,compile_output`);
     if(result){
       console.log(result.data);
       return result.data;

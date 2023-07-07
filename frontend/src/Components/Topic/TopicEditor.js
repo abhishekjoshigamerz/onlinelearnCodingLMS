@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import AceEditor from 'react-ace';
-
-import 'ace-builds/src-noconflict/mode-java';
-import 'ace-builds/src-noconflict/theme-monokai';
+import Editor from '@monaco-editor/react';
 
 const TopicEditor = ({code,setCode}) => {
- 
+    
+    
+
+
 
     const onChange = (newValue) => {
         setCode(newValue);
@@ -15,16 +15,18 @@ const TopicEditor = ({code,setCode}) => {
         <div className="topic-editor">
           
             <div className="ace-editor-wrapper">
-                <AceEditor
-                    mode="java"
-                    theme="monokai"
-                    onChange={onChange}
-                    name="course-editor-ace"
-                    editorProps={{ $blockScrolling: true }}
-                    value={code}
-                    width="100%"
-                    height="94vh"
-                />
+                 <Editor
+                        height="90vh"
+                        language={languageMode}
+                        value={code}
+                        theme='vs-dark'
+                         options={{
+                            automaticLayout: true,
+                            wordWrap: 'on',
+                            colorDecorators: true
+                        }}
+                        onChange={value => setCodeState(value)}
+                   />                
             </div>
         </div>
     );

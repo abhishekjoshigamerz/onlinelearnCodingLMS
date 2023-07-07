@@ -89,7 +89,7 @@ const AIChatBot = ({setAIChatBotTextArea, description}) => {
       </div>
       <form className="chat-input" onSubmit={sendMessage}>
         <input type="text" value={input} onChange={handleInputChange} />
-        <button type="close" onClick={handleClose}>Close</button>
+        <button type="close" onClick={handleClose}>Close</button> &nbsp;&nbsp;
         <button type="submit">Send</button>
       </form>
     </div>

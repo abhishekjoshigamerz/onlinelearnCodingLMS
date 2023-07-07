@@ -1,54 +1,37 @@
-import React,{ useState} from 'react'
+import React,{ useState, useEffect } from 'react'
 import DashboardHeader from '../Dashboard/DashboardHeader';
 import Sidebar from '../Dashboard/Sidebar';
-
-// import AceEditor from "react-ace-builds";
-
-import AceEditor from 'react-ace';
-import 'ace-builds/src-noconflict/mode-java';
-import 'ace-builds/src-noconflict/theme-github';
-// import "ace-builds/src-noconflict/mode-java";
-// import "ace-builds/src-noconflict/theme-github";
-// import "ace-builds/src-noconflict/ext-language_tools";
-// import 'ace-builds/src-noconflict/theme-monokai';
-// import 'ace-builds/src-noconflict/mode-java';
-// import 'ace-builds/src-noconflict/mode-python';
-// import 'ace-builds/src-noconflict/mode-c_cpp'; 
-// import 'ace-builds/src-noconflict/ext-language_tools'; // Include the language tools extension for autocompletion
-// import 'ace-builds/src-noconflict/snippets/java'; // Include the Java snippets
-// import 'ace-builds/src-noconflict/snippets/python'; // Include the Python snippets
-// import 'ace-builds/src-noconflict/snippets/c_cpp'; // Include the C++ snippets
-
 import { useFetchCourseByIdQuery } from '../../features/course/coursesSlice';
 import { useParams } from 'react-router-dom';
 import Loading from '../Loading/Loading';
+import Editor from '@monaco-editor/react';
+
 import { practiceSubmitCode,getSubmissionStatus  } from '../../services/compiler';
-const language = {
-    62:{
-        code : 'class Main{\n public static void main(String[] args){\n System.out.println("Hello World");\n }\n}',
-        mode: 'java'
-    },
-    71: {
-       code : `def main():\n    print("Hello World")\n\nif __name__ == "__main__":\n    main()`,
-       mode : 'python' 
-    },
-    53:{
-       code : `#include<iostream>\n\nint main() {\n    std::cout << "Hello World";\n    return 0;\n}`,
-       mode: 'c_cpp'
-    }    
-}
-
-
-
-
 const parse = require('html-react-parser');
 
 const PracticeIDE = () => {
-    const [languageNumber, setLanguageNumber] = useState('');
+    
+    
+    const language = {
+        62:{
+            code : 'class Main{\n public static void main(String[] args){\n System.out.println("Hello World");\n }\n}',
+            mode: 'java'
+        },
+        71: {
+        code : `def main():\n    print("Hello World")\n\nif __name__ == "__main__":\n    main()`,
+        mode : 'python' 
+        },
+        53:{
+        code : `#include<iostream>\n\nint main() {\n    std::cout << "Hello World";\n    return 0;\n}`,
+        mode: 'cpp'
+        }    
+    }
+    
+    
+    const [languageMode, setlanguageMode] = useState('');
     const [setCode, setCodeState] = useState('');
     const [languageCode, setLanguageCode] = useState('');
     const [isComipling, setIsComipling] = useState(false);
-
     const [resultMessage, setResultMessage] = useState(null);
 
     const handleResultMessage = (e) => {
@@ -60,14 +43,15 @@ const PracticeIDE = () => {
         const status = await getSubmissionStatus(token);
         if (status && status.status.id <= 2) {
           // Status code 1 or 2 indicates the code is still in the queue
-          setTimeout(() => waitAndGetResult(token), 1000); // Retry after 1 second
+          setTimeout(() => waitAndGetResult(token), 5000); // Retry after 5 second
         } else if (status) {
           // Code is compiled and result is available
           const result = await getSubmissionStatus(token);
            
           if(result.status.id === 6){
             // let output =  atob(result.compile_output);
-            let output = `<p>Code Output : </p> <pre>Error: ${result.compile_output}</pre>
+            console.log(result);
+            let output = `<p>Code Output : </p> <pre>Error: ${atob(result.compile_output)}</pre>
             
             `
             setResultMessage(output);
@@ -93,7 +77,8 @@ const PracticeIDE = () => {
     const handleCodeSubmission = async(languageCode) => {
         
         setIsComipling(true);
-        let result = await practiceSubmitCode(btoa(setCode),languageNumber,'java');
+        
+        let result = await practiceSubmitCode(btoa(setCode),languageCode,'java');
 
         if(result){
             const token = result.token;
@@ -102,12 +87,15 @@ const PracticeIDE = () => {
         }
     }
 
-    const manageChange = async(codeId) =>{
-        setLanguageNumber(codeId);
-        setLanguageCode(language[codeId]); 
-        setCodeState(language[codeId].code);
-        console.log(languageCode);
-    }   
+    const changeProgramming = (e) => {
+        
+        setCodeState(language[e.target.value].code);
+        setlanguageMode(language[e.target.value].mode);
+        setLanguageCode(e.target.value);
+        console.log(setCode);
+        console.log(languageMode);
+    }
+   
 
     return (
     <>    
@@ -129,7 +117,7 @@ const PracticeIDE = () => {
                 <p>
                     Welcome to the PracticeIDE, your new virtual environment for coding in language of your choice!
                 </p>
-                 <select class="form-select" aria-label="Select Programming Language" onChange={(event)=> manageChange(event.target.value)}>
+                 <select class="form-select" aria-label="Select Programming Language" onChange={changeProgramming}>
                     <option selected>Select Programming Language</option>
                     <option value="62">Java</option>
                     <option value="71">Python</option>
@@ -159,27 +147,18 @@ const PracticeIDE = () => {
    
             </div>
             <div className="col-md-6 h-100">
-                <AceEditor
-                mode={`${languageCode.mode}`}
-                theme="monokai"
-                name="ace-editor-practice-ide"
-                width='200%' 
-                height='100%'     
-                fontSize={16}
-                showPrintMargin={true}
-                showGutter={true}
-                highlightActiveLine={true}
-                editorProps={{ $blockScrolling: Infinity }}
-                defaultValue={`This is programming IDE.\nSelect language from  dropdown and\nstart coding.`}
-                value={`${setCode}`}
-                onChange={newCode => setCodeState(newCode)}
-                setOptions={{
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true,
-                    enableSnippets: false,
-                    showLineNumbers: true,
-                    tabSize: 2,
-                }} />
+                   <Editor
+                        height="90vh"
+                        language={languageMode}
+                        value={setCode}
+                        theme='vs-dark'
+                         options={{
+                            automaticLayout: true,
+                            wordWrap: 'on',
+                            colorDecorators: true
+                        }}
+                        onChange={value => setCodeState(value)}
+                   />
             </div> 
         </div>  
     </div>
@@ -187,7 +166,7 @@ const PracticeIDE = () => {
             <button type="button" className="btn btn-success" onClick={(event)=>handleCodeSubmission(languageCode)}>Submit Code</button>
          </div> 
     </main>
-             {/* Topic footers */}
+             
         
 
         </div>
@@ -201,3 +180,4 @@ const PracticeIDE = () => {
 
 
 export default PracticeIDE;
+
