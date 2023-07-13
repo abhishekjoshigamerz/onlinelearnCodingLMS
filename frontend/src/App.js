@@ -12,7 +12,7 @@ import RequireAuth from './features/auth/RequireAuth';
 import ViewCourse from './Components/ViewCourse/ViewCourse';
 import { DashboardCourses } from './Components/DashboardCourses/DashboardCourses';
 import PracticeIDE from './Components/PracticeIDE/PracticeIDE';
-
+import JobsSearch from './Components/JobsSearch/JobsSearch';
 import Settings from './Components/Settings/Settings';
 import EmailVerification from './Components/EmailVerification/EmailVerification';
 import Logout from './Components/Logout/Logout';
@@ -48,6 +48,7 @@ const App = () => {
           <Route path='/course/:courseId/topic/:topicId' element={<Topic />} />
           <Route path='/dashboard/courses' element={<DashboardCourses />} />
           <Route path='/practice-ide' element={<PracticeIDE />} />
+          <Route path='/search-jobs' element={<JobsSearch />} />
           <Route path='/settings' element={<Settings />} />
           <Route path='/cart' element={<Cart />} />
         </Route>

@@ -46,6 +46,18 @@ const Sidebar = () => {
     <NavLink 
         className="nav-link" 
         aria-current="page" 
+        to={"/search-jobs/"}
+        style={{fontSize:'18px', color:'#333', textDecoration:'none'}}
+    >
+        <span data-feather="home"></span>
+        Apply For Jobs
+    </NavLink>
+  </li>  
+
+  <li className="nav-item text-center" style={{fontSize:'18px', backgroundColor:'#f5f5f5', borderRadius:'10px', padding:'10px'}}>
+    <NavLink 
+        className="nav-link" 
+        aria-current="page" 
         to={"/settings/"}
         style={{fontSize:'18px', color:'#333', textDecoration:'none'}}
     >
