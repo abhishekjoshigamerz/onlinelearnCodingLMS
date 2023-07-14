@@ -8,11 +8,12 @@ import axios from 'axios';
 
 const JobsSearch = () => {
     const [searchTerms, setSearchTerms] = useState('');
+    const [isLoading, setIsLoading] = useState(false); // This is to prevent multiple form submissions at once
     const [location, setLocation] = useState('');
     const [jobs, setJobs] = useState([]);
     const [selectedJob, setSelectedJob] = useState(null); 
     const [showModal, setShowModal] = useState(false);
-    const urlLinkedIN  = 'https://linkedin-jobs-search.p.rapidapi.com/';
+    const urlLinkedIN  = process.env.REACT_APP_JOB_URL;
 
   
     async function getJobs(options){
@@ -39,14 +40,16 @@ const JobsSearch = () => {
             }
         };
         try {
+            setIsLoading(true);
              const letResult = await getJobs(options); 
                 if(letResult){
                     console.log(letResult);
                     setJobs(letResult);
-
+                    setIsLoading(false);
                 }     
         } catch (error) {
             console.log(error);
+            setIsLoading(false);
             setJobs([]);
         }
     };
@@ -147,8 +150,7 @@ const JobsSearch = () => {
         </Button>
       </Modal.Footer>
     </Modal>
-        </>
-        
+        </> 
     );
 }
 
